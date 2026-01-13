@@ -131,3 +131,27 @@
      - Gives energy
      - Helps us grow and learn
 ```
+
+
+Domain
+
+1. Definition:
+A KnowledgeUnit is a structured learning object representing one topic the user wants to learn, including the AI-generated explanation and metadata.
+
+2. Required fields:
+- id
+- topic
+- originalPrompt
+- explanation
+- level
+- createdAt
+
+3. Location:
+lib/learning/types.ts
+Because it is domain data and must be reusable and framework-agnostic.
+
+4. Creation flow:
+UI → Action → lib function → database → result returned
+
+5. Reading flow:
+Pages and actions read KnowledgeUnits through lib queries.
