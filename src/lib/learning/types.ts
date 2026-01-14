@@ -10,5 +10,12 @@ export type KnowledgeUnit = {
 
 export type KnowledgeRequest = {
   prompt: string
-  level: "beginner" | "intermediate" | "advanced"; 
+  level: "beginner" | "intermediate" | "advanced";
 }
+
+export type GeneratedLesson = {
+  topic: string;
+  simplifiedExplanation: string;
+  childExplanation: string;
+  keyPoints: string[];
+};
