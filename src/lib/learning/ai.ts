@@ -12,6 +12,7 @@ export async function generateLesson(input: KnowledgeRequest): Promise<Generated
     throw new Error("OPENAI_API_KEY is missing on the server.");
   }
 
+
   const response = await client.responses.create({
     model: "gpt-5-nano-2025-08-07",
     reasoning: { effort: "low" },
@@ -62,11 +63,9 @@ export async function generateLesson(input: KnowledgeRequest): Promise<Generated
   try {
     parsed = JSON.parse(raw);
   } catch {
-    // Extremely rare now, but keep a good error.
     throw new Error("Model returned non-JSON output unexpectedly.");
   }
 
-  // Minimal runtime check (you can keep your isGeneratedLesson if you want)
   const lesson = parsed as GeneratedLesson;
 
   if (
@@ -76,7 +75,7 @@ export async function generateLesson(input: KnowledgeRequest): Promise<Generated
     typeof lesson.childExplanation !== "string" ||
     !Array.isArray(lesson.keyPoints)
   ) {
-    throw new Error("JSON does not match GeneratedLesson.");
+    throw new Error("JSON does not match Generated Lesson.");
   }
 
   return lesson;
