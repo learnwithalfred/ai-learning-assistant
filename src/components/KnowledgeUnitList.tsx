@@ -1,4 +1,4 @@
-import { KnowledgeUnit } from "@/lib/learning/types";
+import { KnowledgeUnit } from "@/lib/learning/knowledge-units/types";
 
 type Props = {
   units: KnowledgeUnit[];

@@ -41,7 +41,7 @@ function SubmitButton() {
       disabled={pending}
       className="rounded-lg bg-black px-4 py-2 text-sm text-white disabled:opacity-50"
     >
-      {pending ? "Teaching…" : "Teach me"}
+      {pending ? "Searhing…" : "Teach me"}
     </button>
   );
 }

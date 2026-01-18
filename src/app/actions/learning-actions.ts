@@ -1,9 +1,10 @@
 "use server";
 
 
+import { createKnowledgeUnit } from "@/lib/learning/knowledge-units/mutations";
+import { KnowledgeRequest } from "@/lib/learning/knowledge-units/types";
 import { revalidatePath } from "next/cache";
-import { createKnowledgeUnit } from "@/lib/learning/mutations";
-import { KnowledgeRequest } from "@/lib/learning/types";
+
 
 export async function createKnowledgeUnitAction(formData: FormData): Promise<void> {
   const prompt = (formData.get("prompt") ?? "").toString().trim();

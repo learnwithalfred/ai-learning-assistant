@@ -1,7 +1,7 @@
 import KnowledgeUnitForm from "@/components/KnowledgeUnitForm";
 import KnowledgeUnitList from "@/components/KnowledgeUnitList";
-import { getKnowledgeUnits } from "@/lib/learning/queries";
 import { createKnowledgeUnitAction } from "@/app/actions/learning-actions";
+import { getKnowledgeUnits } from "@/lib/learning/knowledge-units/queries";
 
 export default async function Home() {
   const units = await getKnowledgeUnits();
