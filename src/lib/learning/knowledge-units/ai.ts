@@ -1,22 +1,20 @@
 import OpenAI from "openai";
 import { GeneratedLesson, KnowledgeRequest } from "./types";
+import { openaiClient } from "@/lib/ai/openai-client";
+import { AI_CONFIG } from "@/lib/ai/configs";
 
-const client = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
 function buildUserPrompt(input: KnowledgeRequest) {
   return `Topic: ${input.prompt}\nLevel: ${input.level}`;
 }
 
 export async function generateLesson(input: KnowledgeRequest): Promise<GeneratedLesson> {
-  if (!process.env.OPENAI_API_KEY) {
-    throw new Error("OPENAI_API_KEY is missing on the server.");
-  }
 
 
-  const response = await client.responses.create({
-    model: "gpt-5-nano-2025-08-07",
-    reasoning: { effort: "low" },
-    max_output_tokens: 900,
+  const response = await openaiClient.responses.create({
+    model: AI_CONFIG.model,
+    reasoning: AI_CONFIG.reasoning,
+    max_output_tokens: AI_CONFIG.maxOutputTokens,
 
     // Force valid JSON output via schema
     text: {
