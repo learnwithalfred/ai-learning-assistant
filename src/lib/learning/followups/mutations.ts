@@ -6,7 +6,7 @@ import { generateFollowUpAnswer } from "./ai";
 export async function askFollowUp(
   unitId: string,
   question: string
-): Promise<{ userMessage: FollowUpMessage; assistantMessage: FollowUpMessage }> {
+): Promise<void> {
   const q = question.trim();
   if (!unitId) throw new Error("unitId is required");
   if (!q) throw new Error("Question is required");
@@ -21,7 +21,6 @@ export async function askFollowUp(
     text: q,
     createdAt: new Date(),
   };
-
   followUpMessages.push(userMessage);
 
   const answer = await generateFollowUpAnswer(unit, q);
@@ -33,8 +32,5 @@ export async function askFollowUp(
     text: answer,
     createdAt: new Date(),
   };
-
   followUpMessages.push(assistantMessage);
-
-  return { userMessage, assistantMessage };
 }
