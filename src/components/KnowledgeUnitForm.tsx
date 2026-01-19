@@ -39,9 +39,9 @@ function SubmitButton() {
     <button
       type="submit"
       disabled={pending}
-      className="rounded-lg bg-black px-4 py-2 text-sm text-white disabled:opacity-50"
+      className="rounded-lg bg-black mx-4 px-4 py-2 text-sm text-white disabled:opacity-50"
     >
-      {pending ? "Searhing…" : "Teach me"}
+      {pending ? "Searching…" : "Teach me"}
     </button>
   );
 }

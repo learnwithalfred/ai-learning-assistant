@@ -9,7 +9,7 @@ export default async function Home() {
   return (
     <main className="mx-auto max-w-3xl p-6">
       <h1 className="text-2xl font-bold">AI Learning Assistant</h1>
-      <p className="mt-2 text-sm text-gray-600">
+      <p className="mt-2 text-sm text-gray-600 dark:text-gray-100">
         Paste anything. Get a simplified explanation, a kid-friendly version, and key points.
       </p>
 
