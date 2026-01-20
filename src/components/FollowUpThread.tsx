@@ -1,20 +1,32 @@
 import { FollowUpMessage } from "@/lib/learning/followups/types";
 
-type Props = {
-  messages: FollowUpMessage[];
-};
-
-export default function FollowUpThread({ messages }: Props) {
-  if (!messages.length) {
-    return <p className="text-sm text-slate-400 dark:text-amber-100">No follow-ups yet.</p>;
+export default function FollowUpThread({ 
+  messages 
+}: { 
+  messages: FollowUpMessage[] 
+}) {
+  if (messages.length === 0) {
+    return <p className="text-gray-500">No questions yet. Ask one below!</p>;
   }
 
   return (
-    <div className="mt-3 space-y-2">
-      {messages.map((m) => (
-        <div key={m.id} className="rounded-lg border border-slate-800 p-3">
-          <p className="text-xs text-slate-400">{m.role}</p>
-          <p className="mt-1 text-sm text-slate-200 whitespace-pre-wrap">{m.text}</p>
+    <div className="space-y-4">
+      {messages.map(msg => (
+        <div
+          key={msg.id}
+          className="border rounded p-3 bg-gray-50"
+        >
+          <p className="text-xs font-semibold text-gray-600 mb-1">
+            {msg.role === "user" ? "You" : "AI Assistant"}
+          </p>
+
+          <p className="whitespace-pre-wrap text-gray-800">
+            {msg.text}
+          </p>
+
+          <p className="text-[10px] text-gray-400 mt-1">
+            {msg.createdAt.toLocaleString()}
+          </p>
         </div>
       ))}
     </div>
