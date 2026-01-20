@@ -1,5 +1,5 @@
 "use server";
-
+import { redirect } from "next/navigation";
 
 import { createKnowledgeUnit } from "@/lib/learning/knowledge-units/mutations";
 import { KnowledgeRequest } from "@/lib/learning/knowledge-units/types";
@@ -13,8 +13,8 @@ export async function createKnowledgeUnitAction(formData: FormData): Promise<voi
   if (!prompt) {
     throw new Error("Prompt is required")
   }
-  if (prompt.length < 10) {
-    throw new Error("Prompt must be at least 10 characters")
+  if (prompt.length < 5) {
+    throw new Error("Prompt must be at least 5 characters")
   }
   if (
     level !== "beginner" &&
@@ -25,6 +25,8 @@ export async function createKnowledgeUnitAction(formData: FormData): Promise<voi
   }
 
   const request: KnowledgeRequest = { prompt, level };
-  await createKnowledgeUnit(request);
-  revalidatePath("/");
+  const unit = await createKnowledgeUnit(request);
+
+  revalidatePath("/learn");
+  redirect(`/learn/${unit.id}`);
 }
