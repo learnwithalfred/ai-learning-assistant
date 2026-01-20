@@ -1,4 +1,3 @@
-import OpenAI from "openai";
 import { KnowledgeUnit } from "../knowledge-units/types";
 import { AI_CONFIG } from "@/lib/ai/configs";
 import { openaiClient } from "@/lib/ai/openai-client";
