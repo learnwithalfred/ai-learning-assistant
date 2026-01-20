@@ -3,7 +3,7 @@
 import { useFormStatus } from "react-dom";
 
 type Props = {
-  action: (formData: FormData) => Promise<void>;
+  action: (formData: FormData) => void;
 };
 
 function FormFields() {
@@ -15,7 +15,7 @@ function FormFields() {
         name="prompt"
         placeholder="What do you want to learn?"
         disabled={pending}
-        className="min-h-[120px] w-full rounded-lg border p-3 text-sm disabled:opacity-50"
+        className="w-full rounded-lg border p-3 text-sm disabled:opacity-50"
       />
 
       <select
@@ -39,16 +39,16 @@ function SubmitButton() {
     <button
       type="submit"
       disabled={pending}
-      className="rounded-lg bg-black px-4 py-2 text-sm text-white disabled:opacity-50"
+      className="rounded-lg bg-black mx-4 px-4 py-2 text-sm text-white disabled:opacity-50"
     >
-      {pending ? "Searhing…" : "Teach me"}
+      {pending ? "Searching…" : "Teach me"}
     </button>
   );
 }
 
 export default function KnowledgeUnitForm({ action }: Props) {
   return (
-    <form action={action} className="space-y-3 rounded-xl border p-5 shadow-sm">
+    <form action={action} className="space-y-3 rounded-xl p-5 shadow-sm">
       <FormFields />
       <SubmitButton />
     </form>

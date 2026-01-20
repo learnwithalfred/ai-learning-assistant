@@ -1,12 +1,10 @@
-import { FollowUpMessage } from "./types";
 import { followUpMessages } from "./store";
+import { FollowUpMessage } from "./types";
 
 export async function getFollowUpsForUnit(
   unitId: string
 ): Promise<FollowUpMessage[]> {
   return followUpMessages
-    .filter((msg) => msg.unitId === unitId)
-    .slice()
-    .sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime())
-    .slice(0, 10);
+    .filter(msg => msg.unitId === unitId)
+    .sort((a, b) => a.createdAt.getTime() - b.createdAt.getTime());
 }
