@@ -12,7 +12,7 @@ export default function SidebarSearch({ lessons }: { lessons: Lesson[] }) {
   const fuse = useMemo(() => {
     return new Fuse(lessons, {
       // Fields to search
-      keys: ["topic", 'keyPoints'],
+      keys: ["title", 'keyPoints'],
       threshold: 0.6,
       includeScore: true,
       findAllMatches: true,
@@ -31,7 +31,7 @@ export default function SidebarSearch({ lessons }: { lessons: Lesson[] }) {
     <div>
       <input
         type="text"
-        placeholder="Search topics…"
+        placeholder="Search titles…"
         value={query}
         onChange={e => setQuery(e.target.value)}
         className="w-full border rounded px-2 py-1 mb-3"
@@ -44,7 +44,7 @@ export default function SidebarSearch({ lessons }: { lessons: Lesson[] }) {
               href={`/learn/${u.id}`}
               className="block p-2 rounded hover:bg-gray-100"
             >
-              {u.topic}
+              {u.title}
             </Link>
           </li>
         ))}

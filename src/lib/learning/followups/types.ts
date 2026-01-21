@@ -6,7 +6,7 @@ export type FollowUpMessage = {
   createdAt: Date;
 };
 
-// export type FollowUpRequest = {
-//   lessonId: string;
-//   question: string;
-// };
+export type FollowUpAskRequest = {
+  lessonId: string;
+  question: string;
+};

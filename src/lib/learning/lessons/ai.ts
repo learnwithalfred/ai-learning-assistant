@@ -4,7 +4,7 @@ import { AI_CONFIG } from "@/lib/ai/configs";
 
 
 function buildUserPrompt(input: LessonRequest) {
-  return `Topic: ${input.prompt}`;
+  return `Title: ${input.prompt}`;
 }
 
 export async function generateLesson(input: LessonRequest): Promise<GeneratedLesson> {
@@ -23,9 +23,9 @@ export async function generateLesson(input: LessonRequest): Promise<GeneratedLes
         schema: {
           type: "object",
           additionalProperties: false,
-          required: ["topic", "explanation", "keyPoints"],
+          required: ["title", "explanation", "keyPoints"],
           properties: {
-            topic: { type: "string" },
+            title: { type: "string" },
             explanation: { type: "string" },
             keyPoints: {
               type: "array",

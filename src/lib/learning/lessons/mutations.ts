@@ -15,7 +15,7 @@ export async function createLesson(
 
   const newLesson: Lesson = {
     id: crypto.randomUUID(),
-    topic: prompt,
+    title: prompt,
     originalPrompt: prompt,
 
     explanation: lesson.explanation,

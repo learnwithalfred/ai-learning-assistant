@@ -17,17 +17,6 @@ function FormFields() {
         disabled={pending}
         className="w-full rounded-lg border p-3 text-sm disabled:opacity-50"
       />
-
-      <select
-        name="level"
-        defaultValue="beginner"
-        disabled={pending}
-        className="rounded-lg border px-3 py-2 text-sm bg-white text-black"
-      >
-        <option value="beginner">Beginner</option>
-        <option value="intermediate">Intermediate</option>
-        <option value="advanced">Advanced</option>
-      </select>
     </>
   );
 }
@@ -46,7 +35,7 @@ function SubmitButton() {
   );
 }
 
-export default function KnowledgeUnitForm({ action }: Props) {
+export default function LessonForm({ action }: Props) {
   return (
     <form action={action} className="space-y-3 rounded-xl p-5 shadow-sm">
       <FormFields />

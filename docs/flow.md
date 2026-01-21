@@ -14,7 +14,7 @@ Validates request
 Calls generateExplanation(request) to get the AI explanation
 Constructs a Lesson object:
 id
-topic (if we extract it)
+title (if we extract it)
 originalPrompt
 explanation
 level

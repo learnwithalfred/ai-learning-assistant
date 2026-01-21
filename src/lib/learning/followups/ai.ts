@@ -17,7 +17,7 @@ Constraints:
 - No markdown
 - 100–160 words
 
-Lesson topic: ${lesson.topic}
+Lesson title: ${lesson.title}
 
 Explanation:
 ${lesson.explanation}
