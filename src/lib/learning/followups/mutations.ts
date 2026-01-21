@@ -1,33 +1,33 @@
 import { followUpMessages } from "./store";
 import { FollowUpMessage } from "./types";
-import { getKnowledgeUnitById } from "../knowledge-units/queries";
+import { getLessonById } from "../lessons/queries";
 import { generateFollowUpAnswer } from "./ai";
 
 export async function askFollowUp(
-  unitId: string,
+  lessonId: string,
   question: string
 ): Promise<void> {
   const q = question.trim();
-  if (!unitId) throw new Error("unitId is required");
+  if (!lessonId) throw new Error("lessonId is required");
   if (!q) throw new Error("Question is required");
 
-  const unit = await getKnowledgeUnitById(unitId);
-  if (!unit) throw new Error("KnowledgeUnit not found");
+  const lesson = await getLessonById(lessonId);
+  if (!lesson) throw new Error("Lesson not found");
 
   const userMessage: FollowUpMessage = {
     id: crypto.randomUUID(),
-    unitId,
+    lessonId,
     role: "user",
     text: q,
     createdAt: new Date(),
   };
   followUpMessages.push(userMessage);
 
-  const answer = await generateFollowUpAnswer(unit, q);
+  const answer = await generateFollowUpAnswer(lesson, q);
 
   const assistantMessage: FollowUpMessage = {
     id: crypto.randomUUID(),
-    unitId,
+    lessonId,
     role: "assistant",
     text: answer,
     createdAt: new Date(),

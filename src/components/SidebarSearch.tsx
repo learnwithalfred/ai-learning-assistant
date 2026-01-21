@@ -3,14 +3,14 @@
 import { useState, useMemo } from "react";
 import Link from "next/link";
 import Fuse from "fuse.js";
-import { KnowledgeUnit } from "@/lib/learning/knowledge-units/types";
+import { Lesson } from "@/lib/learning/lessons/types";
 
-export default function SidebarSearch({ units }: { units: KnowledgeUnit[] }) {
+export default function SidebarSearch({ lessons }: { lessons: Lesson[] }) {
   const [query, setQuery] = useState("");
 
   // Configure Fuse.js only once (memo)
   const fuse = useMemo(() => {
-    return new Fuse(units, {
+    return new Fuse(lessons, {
       // Fields to search
       keys: ["topic", 'keyPoints'],
       threshold: 0.6,
@@ -18,9 +18,9 @@ export default function SidebarSearch({ units }: { units: KnowledgeUnit[] }) {
       findAllMatches: true,
       includeMatches: true
     });
-  }, [units]);
+  }, [lessons]);
 
-  let filtered = units;
+  let filtered = lessons;
 
   if (query.trim() !== "") {
     const results = fuse.search(query);

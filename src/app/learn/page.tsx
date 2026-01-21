@@ -1,5 +1,5 @@
 import KnowledgeUnitForm from "@/components/KnowledgeUnitForm";
-import { createKnowledgeUnitAction } from "../actions/learning-actions";
+import { createLessonAction } from "../actions/learning-actions";
 
 export default function LearnPage() {
   return (
@@ -12,7 +12,7 @@ export default function LearnPage() {
       </p>
 
       <div className="w-full">
-        <KnowledgeUnitForm action={createKnowledgeUnitAction} />
+        <KnowledgeUnitForm action={createLessonAction} />
       </div>
     </div>
   );

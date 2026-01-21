@@ -1,14 +1,13 @@
-import OpenAI from "openai";
-import { GeneratedLesson, KnowledgeRequest } from "./types";
+import { GeneratedLesson, LessonRequest } from "./types";
 import { openaiClient } from "@/lib/ai/openai-client";
 import { AI_CONFIG } from "@/lib/ai/configs";
 
 
-function buildUserPrompt(input: KnowledgeRequest) {
-  return `Topic: ${input.prompt}\nLevel: ${input.level}`;
+function buildUserPrompt(input: LessonRequest) {
+  return `Topic: ${input.prompt}`;
 }
 
-export async function generateLesson(input: KnowledgeRequest): Promise<GeneratedLesson> {
+export async function generateLesson(input: LessonRequest): Promise<GeneratedLesson> {
 
 
   const response = await openaiClient.responses.create({
@@ -24,11 +23,10 @@ export async function generateLesson(input: KnowledgeRequest): Promise<Generated
         schema: {
           type: "object",
           additionalProperties: false,
-          required: ["topic", "simplifiedExplanation", "childExplanation", "keyPoints"],
+          required: ["topic", "explanation", "keyPoints"],
           properties: {
             topic: { type: "string" },
-            simplifiedExplanation: { type: "string" },
-            childExplanation: { type: "string" },
+            explanation: { type: "string" },
             keyPoints: {
               type: "array",
               items: { type: "string" },
@@ -68,9 +66,7 @@ export async function generateLesson(input: KnowledgeRequest): Promise<Generated
 
   if (
     !lesson ||
-    typeof lesson.topic !== "string" ||
-    typeof lesson.simplifiedExplanation !== "string" ||
-    typeof lesson.childExplanation !== "string" ||
+    typeof lesson.explanation !== "string" ||
     !Array.isArray(lesson.keyPoints)
   ) {
     throw new Error("JSON does not match Generated Lesson.");
