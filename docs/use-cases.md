@@ -1,44 +1,52 @@
 ```md
 # AI Learning Assistant – Use Cases
 
-## 1. Create KnowledgeUnit
+## 1. Create Lesson
+
 **Actor:** User  
-**Goal:** Learn a piece of content  
+**Goal:** Learn a piece of content
 
 **Flow:**
+
 1. User pastes content
 2. Clicks **Teach me**
 3. AI returns:
    - Simplified explanation
    - Child-friendly explanation
    - Key points
-4. App stores the KnowledgeUnit
+4. App stores the Lesson
 
 ---
 
-## 2. View KnowledgeUnit
-**Actor:** User  
+## 2. View Lesson
+
+**Actor:** User
 
 **Flow:**
-1. User sees a list of KnowledgeUnits
+
+1. User sees a list of Lessons
 2. Clicks one
 3. App shows explanations and key points
 
 ---
 
 ## 3. Ask Follow-Up Questions
-**Actor:** User  
+
+**Actor:** User
 
 **Flow:**
+
 1. User types a question
-2. AI answers using the KnowledgeUnit content
+2. AI answers using the Lesson content
 
 ---
 
 ## 4. Generate Quiz
-**Actor:** User  
+
+**Actor:** User
 
 **Flow:**
+
 1. Clicks **Quiz me**
 2. AI generates questions
 3. User answers
@@ -51,7 +59,8 @@
 ## Example 1: Benefits of Brushing Teeth
 
 **Flow:**
-1. User asks: *Why do I need to brush my teeth?*
+
+1. User asks: _Why do I need to brush my teeth?_
 2. Clicks **Teach me**
 3. AI returns:
    - **Simplified explanation:**  
@@ -62,14 +71,15 @@
      - Keeps teeth clean
      - Prevents cavities
      - Keeps gums healthy
-4. Stored in history as: *Benefits of Brushing Teeth*
+4. Stored in history as: _Benefits of Brushing Teeth_
 
 ---
 
 ## Example 2: Multiplication
 
 **Flow:**
-1. User asks: *What is 7 × 8?*
+
+1. User asks: _What is 7 × 8?_
 2. Clicks **Teach me**
 3. AI returns:
    - **Simplified explanation:**  
@@ -85,7 +95,8 @@
 ## Example 3: Why Is the Sky Blue?
 
 **Flow:**
-1. User asks: *Why is the sky blue?*
+
+1. User asks: _Why is the sky blue?_
 2. Clicks **Teach me**
 3. AI returns:
    - **Simplified explanation:**  
@@ -102,7 +113,8 @@
 ## Example 4: What Is Gravity?
 
 **Flow:**
-1. User asks: *What is gravity?*
+
+1. User asks: _What is gravity?_
 2. Clicks **Teach me**
 3. AI returns:
    - **Simplified explanation:**  
@@ -119,7 +131,8 @@
 ## Example 5: Why Do We Need Sleep?
 
 **Flow:**
-1. User asks: *Why do we need sleep?*
+
+1. User asks: _Why do we need sleep?_
 2. Clicks **Teach me**
 3. AI returns:
    - **Simplified explanation:**  
@@ -132,26 +145,26 @@
      - Helps us grow and learn
 ```
 
-
 Domain
 
 1. Definition:
-A KnowledgeUnit is a structured learning object representing one topic the user wants to learn, including the AI-generated explanation and metadata.
+   A Lesson is a structured learning object representing one title the user wants to learn, including the AI-generated explanation and metadata.
 
 2. Required fields:
+
 - id
-- topic
+- title
 - originalPrompt
 - explanation
 - level
 - createdAt
 
 3. Location:
-lib/learning/types.ts
-Because it is domain data and must be reusable and framework-agnostic.
+   lib/learning/types.ts
+   Because it is domain data and must be reusable and framework-agnostic.
 
 4. Creation flow:
-UI → Action → lib function → database → result returned
+   UI → Action → lib function → database → result returned
 
 5. Reading flow:
-Pages and actions read KnowledgeUnits through lib queries.
+   Pages and actions read Lessons through lib queries.

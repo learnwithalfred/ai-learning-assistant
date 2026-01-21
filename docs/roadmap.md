@@ -6,6 +6,7 @@ Only Version 1 is implemented in code. Other versions represent future growth.
 ---
 
 ## v1 – Core Learning Engine (Portfolio MVP)
+
 - Paste text content
 - Generate:
   - Simplified explanation
@@ -19,7 +20,8 @@ Only Version 1 is implemented in code. Other versions represent future growth.
 ---
 
 ## v2 – Knowledge History
-- Save KnowledgeUnits
+
+- Save Lessons
 - View past lessons
 - Delete / edit units
 - Basic search
@@ -27,20 +29,23 @@ Only Version 1 is implemented in code. Other versions represent future growth.
 ---
 
 ## v3 – Quiz System
-- Generate quizzes from KnowledgeUnits
+
+- Generate quizzes from Lessons
 - Score answers
 - Track correctness
 
 ---
 
 ## v4 – Learning Progress
+
 - Learning streaks
-- Topic completion
+- title completion
 - Weak areas detection
 
 ---
 
 ## v5 – Smart Search
+
 - Semantic search using embeddings
 - Ask:
   “What did I learn about React state?”
@@ -48,33 +53,38 @@ Only Version 1 is implemented in code. Other versions represent future growth.
 ---
 
 ## v6 – File Upload
+
 - Upload PDF / DOC
 - Extract content
-- Generate KnowledgeUnits from files
+- Generate Lessons from files
 
 ---
 
 ## v7 – Audio Learning
+
 - Convert explanations to audio
 - Listen while walking or driving
 
 ---
 
 ## v8 – Visual Learning
+
 - Generate diagrams
 - Simple concept illustrations
 
 ---
 
 ## v9 – Sharing & Collaboration
-- Share KnowledgeUnits
+
+- Share Lessons
 - Public learning pages
 - Community learning
 
 ---
 
 ## v10 – Personal AI Teacher
+
 - Full personalized learning plans
 - Adaptive difficulty
-- Topic recommendations
+- title recommendations
 - Memory of user weaknesses

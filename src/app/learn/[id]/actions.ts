@@ -4,7 +4,7 @@ import { askFollowUp } from "@/lib/learning/followups/mutations";
 import { revalidatePath } from "next/cache";
 
 export async function askFollowUpAction(
-  unitId: string,
+  lessonId: string,
   formData: FormData
 ) {
   const question = formData.get("question")?.toString().trim() ?? "";
@@ -13,8 +13,8 @@ export async function askFollowUpAction(
     throw new Error("Question cannot be empty");
   }
 
-  await askFollowUp(unitId, question);
+  await askFollowUp(lessonId, question);
 
 
-  revalidatePath(`/learn/${unitId}`);
+  revalidatePath(`/learn/${lessonId}`);
 }

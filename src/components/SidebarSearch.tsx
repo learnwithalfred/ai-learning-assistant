@@ -3,24 +3,24 @@
 import { useState, useMemo } from "react";
 import Link from "next/link";
 import Fuse from "fuse.js";
-import { KnowledgeUnit } from "@/lib/learning/knowledge-units/types";
+import { Lesson } from "@/lib/learning/lessons/types";
 
-export default function SidebarSearch({ units }: { units: KnowledgeUnit[] }) {
+export default function SidebarSearch({ lessons }: { lessons: Lesson[] }) {
   const [query, setQuery] = useState("");
 
   // Configure Fuse.js only once (memo)
   const fuse = useMemo(() => {
-    return new Fuse(units, {
+    return new Fuse(lessons, {
       // Fields to search
-      keys: ["topic", 'keyPoints'],
+      keys: ["title", 'keyPoints'],
       threshold: 0.6,
       includeScore: true,
       findAllMatches: true,
       includeMatches: true
     });
-  }, [units]);
+  }, [lessons]);
 
-  let filtered = units;
+  let filtered = lessons;
 
   if (query.trim() !== "") {
     const results = fuse.search(query);
@@ -31,7 +31,7 @@ export default function SidebarSearch({ units }: { units: KnowledgeUnit[] }) {
     <div>
       <input
         type="text"
-        placeholder="Search topics…"
+        placeholder="Search titles…"
         value={query}
         onChange={e => setQuery(e.target.value)}
         className="w-full border rounded px-2 py-1 mb-3"
@@ -44,7 +44,7 @@ export default function SidebarSearch({ units }: { units: KnowledgeUnit[] }) {
               href={`/learn/${u.id}`}
               className="block p-2 rounded hover:bg-gray-100"
             >
-              {u.topic}
+              {u.title}
             </Link>
           </li>
         ))}

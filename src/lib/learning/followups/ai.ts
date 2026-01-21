@@ -1,10 +1,10 @@
-import { KnowledgeUnit } from "../knowledge-units/types";
+import { Lesson } from "../lessons/types";
 import { AI_CONFIG } from "@/lib/ai/configs";
 import { openaiClient } from "@/lib/ai/openai-client";
 
 
-function buildPrompt(unit: KnowledgeUnit, question: string) {
-  const keyPoints = unit.keyPoints.map((p) => `- ${p}`).join("\n");
+function buildPrompt(lesson: Lesson, question: string) {
+  const keyPoints = lesson.keyPoints.map((p) => `- ${p}`).join("\n");
 
   return `
 You are a helpful tutor.
@@ -17,13 +17,10 @@ Constraints:
 - No markdown
 - 100–160 words
 
-Lesson topic: ${unit.topic}
+Lesson title: ${lesson.title}
 
-Simplified explanation:
-${unit.simplifiedExplanation}
-
-Explain like I'm 5:
-${unit.childExplanation}
+Explanation:
+${lesson.explanation}
 
 Key points:
 ${keyPoints}
@@ -34,7 +31,7 @@ ${question}
 }
 
 export async function generateFollowUpAnswer(
-  unit: KnowledgeUnit,
+  lesson: Lesson,
   question: string
 ): Promise<string> {
 
@@ -43,7 +40,7 @@ export async function generateFollowUpAnswer(
 
   const response = await openaiClient.responses.create({
     model: AI_CONFIG.model,
-    input: buildPrompt(unit, q),
+    input: buildPrompt(lesson, q),
     reasoning: AI_CONFIG.reasoning,
     max_output_tokens: AI_CONFIG.maxOutputTokens,
   });

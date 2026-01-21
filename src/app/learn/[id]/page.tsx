@@ -1,14 +1,14 @@
-import { getKnowledgeUnitById } from "@/lib/learning/knowledge-units/queries";
+import { getLessonById } from "@/lib/learning/lessons/queries";
 import { getFollowUpsForUnit } from "@/lib/learning/followups/queries";
 import FollowUpForm from "@/components/FollowUpForm";
 import { askFollowUpAction } from "./actions";
 
 export default async function LessonPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
-  const unit = await getKnowledgeUnitById(id);
+  const unit = await getLessonById(id);
   const followups = await getFollowUpsForUnit(id);
 
-  if (!unit) return <div>Topic not found.</div>;
+  if (!unit) return <div>Title not found.</div>;
 
   return (
     <div className="flex flex-col h-full">
@@ -16,20 +16,14 @@ export default async function LessonPage({ params }: { params: Promise<{ id: str
       {/* Scrollable content */}
       <div className="flex-1 overflow-y-auto px-6 py-6 space-y-6">
 
-        <h1 className="text-2xl font-bold">{unit.topic}</h1>
-        <p className="text-sm text-gray-500">
-          Level: {unit.level} • {unit.createdAt.toLocaleString()}
+        <h1 className="text-2xl font-bold">{unit.title}</h1>
+        <p className="text-sm text-gray-500">{unit.createdAt.toLocaleString()}
         </p>
 
         {/* Lesson sections */}
         <section>
-          <h2 className="font-semibold">Simplified explanation</h2>
-          <p className="mt-2 whitespace-pre-line">{unit.simplifiedExplanation}</p>
-        </section>
-
-        <section>
-          <h2 className="font-semibold mt-6">Explain like I’m 5</h2>
-          <p className="mt-2 whitespace-pre-line">{unit.childExplanation}</p>
+          <h2 className="font-semibold">Explanation</h2>
+          <p className="mt-2 whitespace-pre-line">{unit.explanation}</p>
         </section>
 
         <section>

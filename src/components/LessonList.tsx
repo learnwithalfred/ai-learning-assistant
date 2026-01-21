@@ -1,28 +1,25 @@
-import { KnowledgeUnit } from "@/lib/learning/knowledge-units/types";
+import { Lesson } from "@/lib/learning/lessons/types";
 
 type Props = {
-  units: KnowledgeUnit[];
+  lessons: Lesson[];
 };
 
-export default function KnowledgeUnitList({ units }: Props) {
-  if (!units.length) {
+export default function LessonList({ lessons }: Props) {
+  if (!lessons.length) {
     return (
       <div className="mt-6 rounded-lg border p-4 text-sm text-gray-600 dark:text-gray-100">
-        No KnowledgeUnits yet. Paste something and click “Teach me”.
+        No Lessons yet. Paste something and click “Teach me”.
       </div>
     );
   }
 
   return (
     <div className="mt-6 space-y-6">
-      {units.map((unit) => (
+      {lessons.map((unit) => (
         <article key={unit.id} className="rounded-xl border p-5 shadow-sm">
           <header className="flex flex-col gap-1 sm:flex-row sm:items-baseline sm:justify-between">
-            <h2 className="text-lg font-semibold">{unit.topic}</h2>
+            <h2 className="text-lg font-semibold">{unit.title}</h2>
             <div className="text-xs text-gray-600 dark:text-gray-100">
-              <span className="rounded-full border px-2 py-0.5">
-                {unit.level}
-              </span>
               <span className="ml-2">
                 {unit.createdAt.toLocaleString()}
               </span>
@@ -33,16 +30,10 @@ export default function KnowledgeUnitList({ units }: Props) {
             <h3 className="mt-4 text-sm font-semibold">
               Simplified explanation</h3>
             <p className="mt-2 text-sm leading-6 text-gray-800 dark:text-gray-100">
-              {unit.simplifiedExplanation}
+              {unit.explanation}
             </p>
           </section>
 
-          <section className="mt-4">
-            <h3 className="text-sm font-semibold">Explain like I’m 5</h3>
-            <p className="mt-2 text-sm leading-6 text-gray-800 dark:text-gray-100 whitespace-pre-wrap">
-              {unit.childExplanation}
-            </p>
-          </section>
 
           <section className="mt-4">
             <h3 className="text-sm font-semibold">Key points</h3>
