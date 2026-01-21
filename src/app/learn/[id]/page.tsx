@@ -1,7 +1,7 @@
 import { getLessonById } from "@/lib/learning/lessons/queries";
 import { getFollowUpsForUnit } from "@/lib/learning/followups/queries";
-import FollowUpForm from "@/components/FollowUpForm";
 import { askFollowUpAction } from "./actions";
+import ChatInput from "@/components/ChatInput";
 
 export default async function LessonPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
@@ -40,14 +40,15 @@ export default async function LessonPage({ params }: { params: Promise<{ id: str
           {followups.map((msg) => (
             <div key={msg.id} className="mb-4">
               <p className="font-bold">{msg.role === "user" ? "You:" : "AI:"}</p>
-              <p className="whitespace-pre-line">{msg.text}</p>
+              {/* <p className="whitespace-pre-line">{msg.text}</p> */}
             </div>
           ))}
         </section>
-
       </div>
-
-      <FollowUpForm action={askFollowUpAction.bind(null, id)} />
+      <ChatInput
+        action={askFollowUpAction.bind(null, id)} name="question"
+        placeholder="Ask a follow-up question…"
+      />
 
     </div>
   );
