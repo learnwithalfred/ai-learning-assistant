@@ -1,76 +1,69 @@
-import { GeneratedLesson, LessonRequest } from "./types";
 import { openaiClient } from "@/lib/ai/openai-client";
 import { AI_CONFIG } from "@/lib/ai/configs";
+import { LessonRequest, GeneratedLesson } from "./types";
 
+export async function generateAILesson(
+  input: LessonRequest
+): Promise<GeneratedLesson> {
+  const prompt = `
+You are an expert teacher.
 
-function buildUserPrompt(input: LessonRequest) {
-  return `Title: ${input.prompt}`;
+The user wants to learn about the following topic:
+"${input.prompt}"
+
+Your job:
+1. Produce one clear explanation (120–200 words).
+2. Extract 3–6 key points only.
+3. Return VALID JSON ONLY. No extra text.
+
+JSON FORMAT (required):
+{
+  "explanation": "string",
+  "keyPoints": ["string", ...]
 }
 
-export async function generateLesson(input: LessonRequest): Promise<GeneratedLesson> {
-
+Rules:
+- Plain text only. No markdown.
+- No headings.
+- No questions.
+- Explanation must be 120–200 words.
+- keyPoints must be a short list of bullet-style strings.
+`.trim();
 
   const response = await openaiClient.responses.create({
     model: AI_CONFIG.model,
+    input: prompt,
     reasoning: AI_CONFIG.reasoning,
     max_output_tokens: AI_CONFIG.maxOutputTokens,
-
-    // Force valid JSON output via schema
-    text: {
-      format: {
-        type: "json_schema",
-        name: "generated_lesson",
-        schema: {
-          type: "object",
-          additionalProperties: false,
-          required: ["title", "explanation", "keyPoints"],
-          properties: {
-            title: { type: "string" },
-            explanation: { type: "string" },
-            keyPoints: {
-              type: "array",
-              items: { type: "string" },
-              maxItems: 5,
-            },
-          },
-        },
-      },
-    },
-
-    input: [
-      {
-        role: "system",
-        content:
-          "You are a teacher. Produce helpful, accurate explanations. " +
-          "Follow the JSON schema exactly. No extra keys.",
-      },
-      {
-        role: "user",
-        content: buildUserPrompt(input),
-      },
-    ],
   });
 
-  // With json_schema format, output_text should be valid JSON.
-  const raw = response.output_text?.trim();
-  if (!raw) throw new Error("Empty response from model.");
+  const text = response.output_text?.trim();
+  if (!text) {
+    throw new Error("Model returned empty response");
+  }
 
-  let parsed: unknown;
+  let result: unknown;
   try {
-    parsed = JSON.parse(raw);
+    result = JSON.parse(text);
   } catch {
-    throw new Error("Model returned non-JSON output unexpectedly.");
+    throw new Error("Model did not return valid JSON.");
   }
 
-  const lesson = parsed as GeneratedLesson;
+  function isGeneratedLesson(value: unknown): value is GeneratedLesson {
+    if (typeof value !== "object" || value === null) return false;
 
-  if (
-    !lesson ||
-    typeof lesson.explanation !== "string" ||
-    !Array.isArray(lesson.keyPoints)
-  ) {
-    throw new Error("JSON does not match Generated Lesson.");
+    const obj = value as Record<string, unknown>;
+
+    return (
+      typeof obj.explanation === "string" &&
+      Array.isArray(obj.keyPoints) &&
+      obj.keyPoints.every((p) => typeof p === "string")
+    );
   }
 
-  return lesson;
+  if (!isGeneratedLesson(result)) {
+    throw new Error("JSON shape does not match GeneratedLesson");
+  }
+
+  return result;
 }
