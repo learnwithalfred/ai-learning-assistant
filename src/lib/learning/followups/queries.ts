@@ -1,7 +1,7 @@
 import { followUpMessages } from "./store";
 import { FollowUpMessage } from "./types";
 
-export async function getFollowUpsForUnit(
+export async function getFollowUpsForLesson(
   lessonId: string
 ): Promise<FollowUpMessage[]> {
   return followUpMessages
