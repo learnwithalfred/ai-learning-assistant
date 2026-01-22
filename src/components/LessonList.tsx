@@ -8,7 +8,7 @@ export default function LessonList({ lessons }: Props) {
   if (!lessons.length) {
     return (
       <div className="mt-6 rounded-lg border p-4 text-sm text-gray-600 dark:text-gray-100">
-        No Lessons yet. Paste something and click “Teach me”.
+        No Lessons yet.
       </div>
     );
   }
@@ -28,7 +28,7 @@ export default function LessonList({ lessons }: Props) {
 
           <section className="mt-4">
             <h3 className="mt-4 text-sm font-semibold">
-              Simplified explanation</h3>
+              Explanation</h3>
             <p className="mt-2 text-sm leading-6 text-gray-800 dark:text-gray-100">
               {unit.explanation}
             </p>

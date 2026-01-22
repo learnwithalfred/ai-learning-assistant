@@ -14,7 +14,5 @@ export async function askFollowUpAction(
   }
 
   await askFollowUp(lessonId, question);
-
-
   revalidatePath(`/learn/${lessonId}`);
 }
