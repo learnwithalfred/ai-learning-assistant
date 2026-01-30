@@ -4,6 +4,7 @@ import { useState, useMemo } from "react";
 import Link from "next/link";
 import Fuse from "fuse.js";
 import { Lesson } from "@/lib/learning/lessons/types";
+import LessonActionsMenu from "./LessonActionMenu";
 
 export default function SidebarSearch({ lessons }: { lessons: Lesson[] }) {
   const [query, setQuery] = useState("");
@@ -38,14 +39,16 @@ export default function SidebarSearch({ lessons }: { lessons: Lesson[] }) {
       />
 
       <ul className="space-y-1">
-        {filtered.map(u => (
-          <li key={u.id}>
-            <Link
-              href={`/learn/${u.id}`}
-              className="block p-2 rounded hover:bg-gray-100"
-            >
-              {u.title}
+        {filtered.map(lesson => (
+          <li key={lesson.id} className="flex items-center justify-between group relative">
+            <Link href={`/learn/${lesson.id}`} className="flex-1 px-2 py-1 truncate">
+              {lesson.title}
             </Link>
+
+            {/* Show menu only on hover */}
+            <div className="absolute left-30 ml-2 top-0 z-20 hidden group-hover:block">
+              <LessonActionsMenu id={lesson.id} title={lesson.title} />
+            </div>
           </li>
         ))}
 

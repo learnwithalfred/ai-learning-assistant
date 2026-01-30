@@ -68,3 +68,22 @@ export async function extractTitle(prompt: string): Promise<string> {
 
   return candidate.charAt(0).toUpperCase() + candidate.slice(1);
 }
+
+
+export async function deleteLesson(id: string): Promise<void> {
+  const index = lessons.findIndex(l => l.id === id);
+  if (index === -1) throw new Error("Lesson not found");
+
+  lessons.splice(index, 1);
+}
+
+
+export async function renameLesson(id: string, newTitle: string): Promise<void> {
+  const lesson = lessons.find(l => l.id === id);
+  if (!lesson) throw new Error("Lesson not found");
+
+  const cleaned = newTitle.trim();
+  if (!cleaned) throw new Error("Title cannot be empty");
+
+  lesson.title = cleaned;
+}
