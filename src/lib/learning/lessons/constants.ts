@@ -42,3 +42,5 @@ export const TITLE_STOP_PHRASES = [
   "thanks",
   "thank you"
 ]
+
+export const LEADING_ARTICLES = ["the", "a", "an"];
