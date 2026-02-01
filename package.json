@@ -18,7 +18,8 @@
     "openai": "^6.16.0",
     "react": "19.2.3",
     "react-dom": "19.2.3",
-    "sweetalert2": "^11.26.17"
+    "sweetalert2": "^11.26.17",
+    "vite-tsconfig-paths": "^6.0.5"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
