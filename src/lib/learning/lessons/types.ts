@@ -4,7 +4,9 @@ export type Lesson = {
   originalPrompt: string;
   explanation: string;
   keyPoints: string[];
+  userId: string;
   createdAt: Date;
+  updatedAt: Date;
 };
 
 export type LessonRequest = {

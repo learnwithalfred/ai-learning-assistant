@@ -5,13 +5,15 @@ import { generateFollowUpAnswer } from "./ai";
 
 export async function askFollowUp(
   lessonId: string,
-  question: string
+  question: string,
+  currentUserId: string
+
 ): Promise<void> {
   const q = question.trim();
   if (!lessonId) throw new Error("lessonId is required");
   if (!q) throw new Error("Question is required");
 
-  const lesson = await getLessonById(lessonId);
+  const lesson = await getLessonById(lessonId, currentUserId);
   if (!lesson) throw new Error("Lesson not found");
 
   const userMessage: FollowUpMessage = {

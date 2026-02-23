@@ -2,10 +2,13 @@ import { getLessonById } from "@/lib/learning/lessons/queries";
 import { getFollowUpsForLesson } from "@/lib/learning/followups/queries";
 import { askFollowUpAction } from "./actions";
 import ChatInput from "@/components/ChatInput";
+import { getCurrentUserId } from "@/lib/auth/getCurrentUser";
 
 export default async function LessonPage({ params }: { params: Promise<{ id: string }> }) {
+
+  const currentUserId = await getCurrentUserId();
   const { id } = await params;
-  const lesson = await getLessonById(id);
+  const lesson = await getLessonById(id, currentUserId);
   const followups = await getFollowUpsForLesson(id);
 
   if (!lesson) return <div>Title not found.</div>;
