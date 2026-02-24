@@ -1,18 +1,8 @@
+import { prisma } from "@/lib/prisma";
 import { extractTitle } from "../utils/extractTitle";
 import { generateAILesson } from "./ai";
-import { lessons } from "./store";
 import { LessonRequest, Lesson } from "./types";
 
-
-function getOwnedLessonOrThrow(id: string, userId: string): Lesson {
-  const lesson = lessons.find(
-    l => l.id === id && l.userId === userId
-  );
-
-  if (!lesson) throw new Error("Lesson not found");
-
-  return lesson;
-}
 
 export async function createLesson(
   input: LessonRequest,
@@ -24,44 +14,44 @@ export async function createLesson(
   if (prompt.length < 5) throw new Error("Prompt must be at least 5 characters");
 
   const lesson = await generateAILesson({ prompt });
-
   const title = await extractTitle(prompt);
 
 
-  const newLesson: Lesson = {
-    id: crypto.randomUUID(),
-    title,
-    originalPrompt: prompt,
-    explanation: lesson.explanation,
-    keyPoints: lesson.keyPoints,
-    userId: currentUserId,
-    createdAt: new Date(),
-    updatedAt: new Date(),
-  };
-
-  lessons.push(newLesson);
-  return newLesson;
+  const saved = await prisma.lesson.create({
+    data: {
+      id: crypto.randomUUID(),
+      title,
+      originalPrompt: prompt,
+      explanation: lesson.explanation,
+      keyPoints: lesson.keyPoints,
+      userId: currentUserId,
+    },
+  });
+  return saved;
 }
-
 
 
 export async function deleteLesson(id: string, currentUserId: string): Promise<void> {
 
-  const index = lessons.findIndex(l => l.id === id && l.userId === currentUserId);
-  if (index === -1) throw new Error("Lesson not found");
+  const lesson = await prisma.lesson.findUnique({ where: { id } });
 
-  lessons.splice(index, 1);
+  if (!lesson || lesson.userId !== currentUserId) {
+    throw new Error("Lesson not found");
+  }
+
+  await prisma.lesson.delete({ where: { id } });
 }
 
 
 export async function renameLesson(id: string, currentUserId: string, newTitle: string): Promise<void> {
+  const lesson = await prisma.lesson.findUnique({ where: { id } });
 
-  const lesson = getOwnedLessonOrThrow(id, currentUserId);
-  if (!lesson) throw new Error("Lesson not found");
+  if (!lesson || lesson.userId !== currentUserId) {
+    throw new Error("Lesson not found");
+  }
 
-  const cleaned = newTitle.trim();
-  if (!cleaned) throw new Error("Title cannot be empty");
-
-  lesson.title = cleaned;
-  lesson.updatedAt = new Date();
+  await prisma.lesson.update({
+    where: { id },
+    data: { title: newTitle },
+  });
 }

@@ -1,20 +1,36 @@
+import { prisma } from "@/lib/prisma";
 import { Lesson } from "./types";
-import { lessons } from './store'
 
 
 export async function getLessons(currentUserId: string): Promise<Lesson[]> {
   if (!currentUserId) {
     throw new Error("Lesson not found");
   }
-  return lessons
-    .slice()
-    .filter(l => l.userId === currentUserId)
-    .sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime())
+  const lessons = await prisma
+    .lesson
+    .findMany({
+      where: { userId: currentUserId },
+      orderBy: { createdAt: "desc" }
+    });
+
+  return lessons;
 }
 
-export async function getLessonById(id: string, currentUserId: string): Promise<Lesson | null> {
+
+export async function getLessonById(
+  id: string,
+  currentUserId: string)
+  : Promise<Lesson | null> {
   if (!currentUserId) {
     throw new Error("Unauthenticated");
   }
-  return lessons.find((l) => l.id === id && l.userId === currentUserId) ?? null;
+
+  const lesson = await prisma.lesson.findUnique({ where: { id } });
+
+  if (!lesson || lesson.userId !== currentUserId) {
+    throw new Error("Lesson not found");
+  }
+
+  return lesson;
 }
+

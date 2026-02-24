@@ -1,21 +1,18 @@
-import { followUpMessages } from "./store";
-import { FollowUpMessage } from "./types";
+import { prisma } from "@/lib/prisma";
 
-export async function getFollowUpsForLesson(
-  lessonId: string
-): Promise<FollowUpMessage[]> {
-  return followUpMessages
-    .filter(msg => msg.lessonId === lessonId)
-    .slice()
-    .sort((a, b) => a.createdAt.getTime() - b.createdAt.getTime());
-}
-
-export async function getRecentFollowUps(
-  lessonId: string, limit = 3
-): Promise<FollowUpMessage[]> {
-  return followUpMessages
-    .filter(m => m.lessonId === lessonId)
-    .slice()
-    .sort((a, b) => a.createdAt.getTime() - b.createdAt.getTime())
-    .slice(-limit);
+export async function getFollowUps(
+  lessonId: string,
+  currentUserId: string,
+   limit?: number
+) {
+  return prisma.followUp.findMany({
+    where: {
+      lessonId,
+      userId: currentUserId,
+    },
+    orderBy: {
+      createdAt: "asc",
+    },
+    ...(limit && { take: -limit }), // take last n limits if provided
+  });
 }
