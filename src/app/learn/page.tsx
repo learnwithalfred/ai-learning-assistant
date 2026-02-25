@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 import { createLessonAction } from "../actions/learning-actions";
 import ChatInput from "@/components/ChatInput";
 

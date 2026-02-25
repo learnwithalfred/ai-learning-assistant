@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 import { getLessonById } from "@/lib/learning/lessons/queries";
 import { getFollowUps } from "@/lib/learning/followups/queries";
 import { createFollowUpAction } from "./actions";

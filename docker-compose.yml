@@ -1,0 +1,26 @@
+services:
+  web:
+    build: .
+    container_name: ai_app
+    ports:
+      - "3000:3000"
+    env_file:
+      - .env.local
+    depends_on:
+      - db
+    command: ["./wait-for-db.sh", "db", "npm", "start"]
+
+  db:
+    image: postgres:15
+    container_name: ai_db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: ai_app
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
