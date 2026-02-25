@@ -1,10 +1,10 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { askFollowUp } from "@/lib/learning/followups/mutations";
+import { createFollowUp } from "@/lib/learning/followups/mutations";
 import { getCurrentUserId } from "@/lib/auth/getCurrentUser";
 
-export async function askFollowUpAction(formData: FormData): Promise<void> {
+export async function createFollowUpAction(formData: FormData): Promise<void> {
   const lessonId = (formData.get("lessonId") ?? "").toString();
   const question = (formData.get("question") ?? "").toString();
   const currentUserId = await getCurrentUserId()
@@ -15,7 +15,7 @@ export async function askFollowUpAction(formData: FormData): Promise<void> {
     throw new Error("Question too short");
   }
 
-  await askFollowUp(lessonId, question, currentUserId);
+  await createFollowUp(lessonId, question, currentUserId);
 
   revalidatePath(`/units/${lessonId}`);
   revalidatePath("/");

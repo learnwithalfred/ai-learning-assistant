@@ -1,7 +1,7 @@
 export type FollowUpMessage = {
   id: string;
   lessonId: string;
-  role: "user" | "assistant";
+  userId: string;
   text: string;
   createdAt: Date;
 };

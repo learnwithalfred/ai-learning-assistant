@@ -1,13 +1,13 @@
 "use server";
 
 import { getCurrentUserId } from "@/lib/auth/getCurrentUser";
-import { askFollowUp } from "@/lib/learning/followups/mutations";
+import { createFollowUp } from "@/lib/learning/followups/mutations";
 import { deleteLesson, renameLesson } from "@/lib/learning/lessons/mutations";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
 const currentUserId = await getCurrentUserId();
-export async function askFollowUpAction(
+export async function createFollowUpAction(
   lessonId: string,
   formData: FormData
 ) {
@@ -17,7 +17,7 @@ export async function askFollowUpAction(
     throw new Error("Question cannot be empty");
   }
 
-  await askFollowUp(lessonId, question, currentUserId);
+  await createFollowUp(lessonId, question, currentUserId);
   revalidatePath(`/learn/${lessonId}`);
 }
 

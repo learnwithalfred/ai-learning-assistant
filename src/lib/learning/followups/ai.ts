@@ -1,17 +1,18 @@
 import { Lesson } from "../lessons/types";
-import { getRecentFollowUps } from "./queries";
+// import { getFollowUps } from "./queries";
 import { openaiClient } from "@/lib/ai/openai-client";
 import { AI_CONFIG } from "@/lib/ai/configs";
 
 export async function generateFollowUpAnswer(
   lesson: Lesson,
-  question: string
+  question: string,
+  // currentUserId: string
 ): Promise<string> {
   const q = question.trim();
   if (!q) throw new Error("Question is required");
 
   // get recent follow-ups
-  const history = await getRecentFollowUps(lesson.id, 3);
+  // const history = await getFollowUps(lesson.id, currentUserId, 3);
 
   const prompt = `
 You are a helpful tutor.
@@ -31,11 +32,6 @@ ${lesson.explanation}
 
 Key points:
 ${lesson.keyPoints.map((p) => `- ${p}`).join("\n")}
-
-Conversation history:
-${history
-      .map((m) => `${m.role === "user" ? "User" : "Tutor"}: ${m.text}`)
-      .join("\n")}
 
 User question:
 ${q}
