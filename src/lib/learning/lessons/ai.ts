@@ -1,6 +1,7 @@
 import { openaiClient } from "@/lib/ai/openai-client";
 import { AI_CONFIG } from "@/lib/ai/configs";
 import { LessonRequest, GeneratedLesson } from "./types";
+import { ExternalServiceError } from "@/lib/errors";
 
 export async function generateAILesson(
   input: LessonRequest
@@ -39,14 +40,14 @@ Rules:
 
   const text = response.output_text?.trim();
   if (!text) {
-    throw new Error("Model returned empty response");
+    throw new ExternalServiceError("Model returned empty response");
   }
 
   let result: unknown;
   try {
     result = JSON.parse(text);
   } catch {
-    throw new Error("Model did not return valid JSON.");
+    throw new ExternalServiceError("Model did not return valid JSON.");
   }
 
   function isGeneratedLesson(value: unknown): value is GeneratedLesson {
@@ -62,7 +63,7 @@ Rules:
   }
 
   if (!isGeneratedLesson(result)) {
-    throw new Error("JSON shape does not match GeneratedLesson");
+    throw new ExternalServiceError("JSON shape does not match GeneratedLesson");
   }
 
   return result;

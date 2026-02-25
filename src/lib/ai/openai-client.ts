@@ -1,7 +1,8 @@
 import OpenAI from "openai";
+import { ValidationError } from "../errors";
 
 if (!process.env.OPENAI_API_KEY) {
-  throw new Error("OPENAI_API_KEY is missing on the server.");
+  throw new ValidationError("OPENAI_API_KEY is missing on the server.");
 }
 
 export const openaiClient = new OpenAI({

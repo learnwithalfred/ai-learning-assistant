@@ -1,10 +1,11 @@
 import { prisma } from "@/lib/prisma";
 import { Lesson } from "./types";
+import { UnauthorizedError, NotFoundError } from "@/lib/errors";
 
 
 export async function getLessons(currentUserId: string): Promise<Lesson[]> {
   if (!currentUserId) {
-    throw new Error("Lesson not found");
+    throw new NotFoundError("Lesson not found");
   }
   const lessons = await prisma
     .lesson
@@ -22,13 +23,13 @@ export async function getLessonById(
   currentUserId: string)
   : Promise<Lesson | null> {
   if (!currentUserId) {
-    throw new Error("Unauthenticated");
+    throw new UnauthorizedError("Unauthenticated");
   }
 
   const lesson = await prisma.lesson.findUnique({ where: { id } });
 
   if (!lesson || lesson.userId !== currentUserId) {
-    throw new Error("Lesson not found");
+    throw new NotFoundError("Lesson not found");
   }
 
   return lesson;

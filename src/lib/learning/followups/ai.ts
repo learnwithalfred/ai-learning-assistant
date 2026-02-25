@@ -2,6 +2,7 @@ import { Lesson } from "../lessons/types";
 // import { getFollowUps } from "./queries";
 import { openaiClient } from "@/lib/ai/openai-client";
 import { AI_CONFIG } from "@/lib/ai/configs";
+import { ValidationError } from "@/lib/errors";
 
 export async function generateFollowUpAnswer(
   lesson: Lesson,
@@ -9,7 +10,7 @@ export async function generateFollowUpAnswer(
   // currentUserId: string
 ): Promise<string> {
   const q = question.trim();
-  if (!q) throw new Error("Question is required");
+  if (!q) throw new ValidationError("Question is required");
 
   // get recent follow-ups
   // const history = await getFollowUps(lesson.id, currentUserId, 3);
@@ -45,7 +46,7 @@ ${q}
   });
 
   const answer = response.output_text?.trim();
-  if (!answer) throw new Error("Empty response from model");
+  if (!answer) throw new ValidationError("Empty response from model");
 
   return answer;
 }

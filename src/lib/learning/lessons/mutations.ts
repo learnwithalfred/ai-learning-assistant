@@ -2,6 +2,7 @@ import { prisma } from "@/lib/prisma";
 import { extractTitle } from "../utils/extractTitle";
 import { generateAILesson } from "./ai";
 import { LessonRequest, Lesson } from "./types";
+import { NotFoundError, ValidationError } from "@/lib/errors";
 
 
 export async function createLesson(
@@ -10,8 +11,8 @@ export async function createLesson(
 ): Promise<Lesson> {
   const prompt = input.prompt.trim();
 
-  if (!prompt) throw new Error("Prompt is required");
-  if (prompt.length < 5) throw new Error("Prompt must be at least 5 characters");
+  if (!prompt) throw new ValidationError("Prompt is required");
+  if (prompt.length < 3) throw new ValidationError("Prompt must be at least 3 characters");
 
   const lesson = await generateAILesson({ prompt });
   const title = await extractTitle(prompt);
@@ -36,7 +37,7 @@ export async function deleteLesson(id: string, currentUserId: string): Promise<v
   const lesson = await prisma.lesson.findUnique({ where: { id } });
 
   if (!lesson || lesson.userId !== currentUserId) {
-    throw new Error("Lesson not found");
+    throw new NotFoundError("Lesson not found");
   }
 
   await prisma.lesson.delete({ where: { id } });
@@ -47,7 +48,7 @@ export async function renameLesson(id: string, currentUserId: string, newTitle: 
   const lesson = await prisma.lesson.findUnique({ where: { id } });
 
   if (!lesson || lesson.userId !== currentUserId) {
-    throw new Error("Lesson not found");
+    throw new NotFoundError("Lesson not found");
   }
 
   await prisma.lesson.update({
