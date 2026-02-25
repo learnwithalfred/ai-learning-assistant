@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { extractTitle } from "../utils/extractTitle";
+import { extractTitle } from "@/lib/learning/utils/extractTitle";
 
 describe("extractTitle", () => {
   it("returns 'Untitled Lesson' for empty input", async () => {
