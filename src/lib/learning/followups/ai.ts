@@ -1,4 +1,4 @@
-import { Lesson } from "../lessons/types";
+import { Lesson } from "@/lib/learning/lessons/types";
 // import { getFollowUps } from "./queries";
 import { openaiClient } from "@/lib/ai/openai-client";
 import { AI_CONFIG } from "@/lib/ai/configs";

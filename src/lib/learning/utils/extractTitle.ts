@@ -1,4 +1,4 @@
-import { LEADING_ARTICLES, TITLE_STOP_PHRASES } from "../lessons/constants";
+import { LEADING_ARTICLES, TITLE_STOP_PHRASES } from "@/lib/learning/lessons/constants";
 
 export async function extractTitle(prompt: string): Promise<string> {
   const original = prompt.trim();

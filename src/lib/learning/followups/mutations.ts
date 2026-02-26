@@ -1,5 +1,5 @@
 import { prisma } from "@/lib/prisma";
-import { getLessonById } from "../lessons/queries";
+import { getLessonById } from "@/lib/learning/lessons/queries";
 import { generateFollowUpAnswer } from "./ai";
 import { NotFoundError, ValidationError } from "@/lib/errors";
 

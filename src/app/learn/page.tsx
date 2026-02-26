@@ -1,6 +1,6 @@
 export const dynamic = "force-dynamic";
 
-import { createLessonAction } from "../actions/learning-actions";
+import { createLessonAction } from "@/app/actions/learning-actions";
 import ChatInput from "@/components/ChatInput";
 
 export default function LearnPage() {

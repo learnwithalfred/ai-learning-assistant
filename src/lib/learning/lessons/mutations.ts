@@ -1,5 +1,5 @@
 import { prisma } from "@/lib/prisma";
-import { extractTitle } from "../utils/extractTitle";
+import { extractTitle } from "@/lib/learning/utils/extractTitle";
 import { generateAILesson } from "./ai";
 import { LessonRequest, Lesson } from "./types";
 import { NotFoundError, ValidationError } from "@/lib/errors";

@@ -17,7 +17,7 @@ vi.mock("@/lib/ai/openai-client", () => ({
 });
 
 
-import { generateAILesson } from "../../lessons/ai";
+import { generateAILesson } from "@/lib/learning/lessons/ai";
 import { openaiClient } from "@/lib/ai/openai-client";
 
 
