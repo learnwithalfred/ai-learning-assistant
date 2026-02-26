@@ -7,6 +7,7 @@ on:
     branches: [ main ]
 env:
   DATABASE_URL: "postgresql://fake@localhost:5432/fake"
+  OPENAI_API_KEY : "FAKE_KEY_FOR_CI"
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
