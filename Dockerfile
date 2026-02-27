@@ -12,6 +12,7 @@ WORKDIR /app
 
 COPY . .
 COPY prisma ./prisma
+COPY .env .env
 COPY --from=deps /app/node_modules ./node_modules
 
 RUN npm install -g npm@11
