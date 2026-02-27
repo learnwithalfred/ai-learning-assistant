@@ -3,6 +3,10 @@ export const dynamic = "force-dynamic";
 import { createLessonAction } from "@/app/actions/learning-actions";
 import ChatInput from "@/components/ChatInput";
 
+export const metadata = {
+  title: "Your Lessons | AI Learning App",
+};
+
 export default function LearnPage() {
   return (
     <div className="flex flex-col h-full">
