@@ -13,7 +13,7 @@ type ChatInputProps = {
 
 export default function ChatInput({ action, name, placeholder }: ChatInputProps) {
   return (
-    <form action={action} className="border-t p-3 w-full">
+    <form action={action} className="w-full">
       <ChatInputInner name={name} placeholder={placeholder} />
     </form>
   );

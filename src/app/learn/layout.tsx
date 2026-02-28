@@ -9,7 +9,7 @@ export default async function LearnLayout({ children }: { children: React.ReactN
       <aside className="w-64 border-r p-4 flex flex-col gap-4">
         <Link
           href="/learn"
-          className="flex items-center gap-2 py-2 text-gray-800 hover:bg-gray-100"
+          className="flex items-center gap-2 py-2 text-gray-800 hover:bg-gray-100 hover:text-gray-800 dark:text-gray-100"
         >
           <PencilSquareIcon className="h-5 w-5" />
           <span>New Chat</span>
