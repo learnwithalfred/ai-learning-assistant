@@ -23,11 +23,16 @@ services:
     ports:
       - "3001:3000" # dev app accessible on 3001
     volumes:
-      - .:/app        # Your source code live-mounted
+      - .:/app
       - /app/node_modules
     environment:
       OPENAI_API_KEY: ${OPENAI_API_KEY}
       DATABASE_URL: postgresql://postgres:postgres@dev_db:5432/ai_app_dev
+      CHOKIDAR_USEPOLLING: "true"
+      WATCHPACK_POLLING: "true"
+      NEXT_WEBPACK_USEPOLLING: "1"
+      WDS_SOCKET_PORT: "0"
+
     command: ["npm", "run", "dev"]
 
 volumes:
