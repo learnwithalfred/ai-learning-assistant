@@ -7,22 +7,22 @@
 
 # 📌 Table of Contents
 
-* [Project Overview](#-project-overview)
-* [Live Demo](#-live-demo)
-* [Core Features (v1)](#-core-features-v1)
-* [Application Flow](#-application-flow)
-* [Architecture Philosophy](#-architecture-philosophy)
-* [Tech Stack](#-tech-stack)
-* [Getting Started](#-getting-started)
-* [Docker Environments](#-docker-environments)
-* [Environment Variables](#-environment-variables)
-* [Prisma Workflow](#-prisma-workflow)
-* [Testing (Vitest)](#-testing-vitest)
-* [Project Structure](#-project-structure)
-* [Troubleshooting](#-troubleshooting)
-* [Product Roadmap](#-product-roadmap)
-* [Contributing](#-contributing)
-* [License](#-license)
+- [Project Overview](#-project-overview)
+- [Live Demo](#-live-demo)
+- [Core Features (v1)](#-core-features-v1)
+- [Application Flow](#-application-flow)
+- [Architecture Philosophy](#-architecture-philosophy)
+- [Tech Stack](#-tech-stack)
+- [Getting Started](#-getting-started)
+- [Docker Environments](#-docker-environments)
+- [Environment Variables](#-environment-variables)
+- [Prisma Workflow](#-prisma-workflow)
+- [Testing (Vitest)](#-testing-vitest)
+- [Project Structure](#-project-structure)
+- [Troubleshooting](#-troubleshooting)
+- [Product Roadmap](#-product-roadmap)
+- [Contributing](#-contributing)
+- [License](#-license)
 
 ---
 
@@ -37,11 +37,11 @@ AI Learning Assistant is a structured AI learning system where users:
 
 The application is intentionally designed using:
 
-* Clear domain boundaries
-* Server Actions as application layer
-* Explicit mutation flows
-* Containerized infrastructure
-* Isolated dev and production environments
+- Clear domain boundaries
+- Server Actions as application layer
+- Explicit mutation flows
+- Containerized infrastructure
+- Isolated dev and production environments
 
 This project demonstrates production-ready thinking, not just UI rendering.
 
@@ -56,16 +56,16 @@ This project demonstrates production-ready thinking, not just UI rendering.
 
 # ✨ Core Features (v1)
 
-* Paste text content
-* Generate:
+- Paste text content
+- Generate:
+  - Simplified explanation
+  - “Explain like I’m 5”
+  - Key takeaways
 
-  * Simplified explanation
-  * “Explain like I’m 5”
-  * Key takeaways
-* Ask follow-up questions grounded in a Lesson
-* Persistent lesson storage
-* Clean, minimal UI
-* Fully containerized environments
+- Ask follow-up questions grounded in a Lesson
+- Persistent lesson storage
+- Clean, minimal UI
+- Fully containerized environments
 
 ---
 
@@ -75,10 +75,10 @@ This project demonstrates production-ready thinking, not just UI rendering.
 
 ### 1️⃣ UI (Client)
 
-* User pastes content
-* Selects difficulty level
-* Clicks **Teach Me**
-* `<form>` submits to a Server Action
+- User pastes content
+- Selects difficulty level
+- Clicks **Teach Me**
+- `<form>` submits to a Server Action
 
 ---
 
@@ -86,10 +86,10 @@ This project demonstrates production-ready thinking, not just UI rendering.
 
 Responsibilities:
 
-* Receives `FormData`
-* Extracts `prompt` and `level`
-* Calls domain mutation: `createLesson(request)`
-* Calls `revalidatePath(...)` to refresh UI
+- Receives `FormData`
+- Extracts `prompt` and `level`
+- Calls domain mutation: `createLesson(request)`
+- Calls `revalidatePath(...)` to refresh UI
 
 The Server Action acts as glue — it does not contain business logic.
 
@@ -101,18 +101,18 @@ The Server Action acts as glue — it does not contain business logic.
 
 Responsibilities:
 
-* Validate request
-* Call AI function `generateExplanation(request)`
-* Construct a `Lesson` entity:
+- Validate request
+- Call AI function `generateExplanation(request)`
+- Construct a `Lesson` entity:
+  - `id`
+  - `title`
+  - `originalPrompt`
+  - `explanation`
+  - `level`
+  - `createdAt`
 
-  * `id`
-  * `title`
-  * `originalPrompt`
-  * `explanation`
-  * `level`
-  * `createdAt`
-* Persist to database
-* Return created Lesson
+- Persist to database
+- Return created Lesson
 
 ---
 
@@ -120,9 +120,9 @@ Responsibilities:
 
 `src/lib/learning/ai.ts`
 
-* Calls external AI API
-* Returns explanation text only
-* Contains no persistence logic
+- Calls external AI API
+- Returns explanation text only
+- Contains no persistence logic
 
 ---
 
@@ -130,9 +130,9 @@ Responsibilities:
 
 Because the route is revalidated:
 
-* The page re-runs
-* Lessons are queried again
-* Updated list is rendered
+- The page re-runs
+- Lessons are queried again
+- Updated list is rendered
 
 Clean, predictable data flow.
 
@@ -164,11 +164,11 @@ This app follows a lightweight domain-driven structure:
 
 Principles:
 
-* No business logic in UI
-* No DB logic in AI module
-* Server Actions = orchestration only
-* Mutations are explicit
-* Side effects are controlled
+- No business logic in UI
+- No DB logic in AI module
+- Server Actions = orchestration only
+- Mutations are explicit
+- Side effects are controlled
 
 This keeps the system testable and scalable.
 
@@ -256,25 +256,67 @@ DATABASE_URL=
 
 ---
 
-# 🧱 Prisma Workflow
+# Development Setup
 
-Create migration:
+## 1. Install Dependencies
+
+```bash
+npm install
+npx prisma generate
+```
+
+---
+
+## 2. Local Development (Recommended)
+
+Start database:
+
+```bash
+docker compose -f docker-compose.dev.yml up dev_db -d
+```
+
+Run migrations:
 
 ```bash
 npx prisma migrate dev
 ```
 
-Generate client:
+Start dev server:
 
 ```bash
-npx prisma generate
+npm run dev
 ```
 
-Deploy migrations in container:
+App runs at:
+
+```
+http://localhost:3000
+```
+
+---
+
+## 3. Full Docker Development
+
+Run app + database:
 
 ```bash
-docker exec -it ai_app_dev 
-npx prisma migrate deploy
+docker compose -f docker-compose.dev.yml up --build
+```
+
+Stop:
+
+```bash
+docker compose -f docker-compose.dev.yml down
+```
+
+---
+
+## 4. Reset Database
+
+```bash
+docker compose -f docker-compose.dev.yml down -v
+docker compose -f docker-compose.dev.yml up dev_db -d
+npx prisma migrate dev
 ```
 
 ---
@@ -298,16 +340,16 @@ npm run test:watch
 Inside container:
 
 ```bash
-docker exec -it ai_app 
+docker exec -it ai_app
 npm run test
 ```
 
 ## Testing Strategy
 
-* Domain mutations tested in isolation
-* AI module mocked
-* Database interactions validated
-* Edge cases covered (invalid input, empty prompt, etc.)
+- Domain mutations tested in isolation
+- AI module mocked
+- Database interactions validated
+- Edge cases covered (invalid input, empty prompt, etc.)
 
 > TODO: Add coverage badge
 > TODO: Add example test snippet
@@ -363,81 +405,81 @@ Only **v1** is implemented.
 
 ## ✅ v1 – Core Learning Engine (Implemented)
 
-* Paste text
-* Generate explanations
-* Follow-up Q&A
-* Domain-driven structure
-* Server Actions + AI integration
+- Paste text
+- Generate explanations
+- Follow-up Q&A
+- Domain-driven structure
+- Server Actions + AI integration
 
 ---
 
 ## 🔜 v2 – Knowledge History
 
-* View past lessons
-* Delete / edit lessons
-* Search
+- View past lessons
+- Delete / edit lessons
+- Search
 
 ---
 
 ## 🔜 v3 – Quiz System
 
-* Generate quizzes
-* Score answers
-* Track correctness
+- Generate quizzes
+- Score answers
+- Track correctness
 
 ---
 
 ## 🔜 v4 – Learning Progress
 
-* Streaks
-* Completion tracking
-* Weak area detection
+- Streaks
+- Completion tracking
+- Weak area detection
 
 ---
 
 ## 🔜 v5 – Smart Search
 
-* Semantic search (embeddings)
-* Query past learning context
+- Semantic search (embeddings)
+- Query past learning context
 
 ---
 
 ## 🔜 v6 – File Upload
 
-* PDF / DOC upload
-* Extract content
-* Generate lessons from files
+- PDF / DOC upload
+- Extract content
+- Generate lessons from files
 
 ---
 
 ## 🔜 v7 – Audio Learning
 
-* Convert explanations to audio
-* Hands-free learning
+- Convert explanations to audio
+- Hands-free learning
 
 ---
 
 ## 🔜 v8 – Visual Learning
 
-* Generate diagrams
-* Concept illustrations
+- Generate diagrams
+- Concept illustrations
 
 ---
 
 ## 🔜 v9 – Sharing & Collaboration
 
-* Public lessons
-* Shareable links
-* Community learning
+- Public lessons
+- Shareable links
+- Community learning
 
 ---
 
 ## 🔜 v10 – Personal AI Teacher
 
-* Personalized learning plans
-* Adaptive difficulty
-* Weakness memory
-* Smart recommendations
+- Personalized learning plans
+- Adaptive difficulty
+- Weakness memory
+- Smart recommendations
 
 ---
 
@@ -451,4 +493,3 @@ Only **v1** is implemented.
 # 📜 License
 
 > TODO: Add LICENSE file
-
