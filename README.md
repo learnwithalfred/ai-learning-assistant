@@ -256,25 +256,67 @@ DATABASE_URL=
 
 ---
 
-# 🧱 Prisma Workflow
+# Development Setup
 
-Create migration:
+## 1. Install Dependencies
+
+```bash
+npm install
+npx prisma generate
+```
+
+---
+
+## 2. Local Development (Recommended)
+
+Start database:
+
+```bash
+docker compose -f docker-compose.dev.yml up dev_db -d
+```
+
+Run migrations:
 
 ```bash
 npx prisma migrate dev
 ```
 
-Generate client:
+Start dev server:
 
 ```bash
-npx prisma generate
+npm run dev
 ```
 
-Deploy migrations in container:
+App runs at:
+
+```
+http://localhost:3000
+```
+
+---
+
+## 3. Full Docker Development
+
+Run app + database:
 
 ```bash
-docker exec -it ai_app_dev sh
-npx prisma migrate deploy
+docker compose -f docker-compose.dev.yml up --build
+```
+
+Stop:
+
+```bash
+docker compose -f docker-compose.dev.yml down
+```
+
+---
+
+## 4. Reset Database
+
+```bash
+docker compose -f docker-compose.dev.yml down -v
+docker compose -f docker-compose.dev.yml up dev_db -d
+npx prisma migrate dev
 ```
 
 ---

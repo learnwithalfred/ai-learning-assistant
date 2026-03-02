@@ -1,32 +1,30 @@
 # docker-compose.yml (production)
 
 services:
-  ai_db:
+  prod_db:
     image: postgres:15
-    container_name: ai_db
+    container_name: learning_prod_db
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: password
-      POSTGRES_DB: ai_app
+      POSTGRES_DB: learning_app_prod
     ports:
       - "5433:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
 
-  ai_app:
+  prod_app:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: ai_app
+    container_name: learning_app_prod
     depends_on:
-      - ai_db
+      - prod_db
     ports:
       - "3000:3000"
     env_file:
-      - .env.local
-    environment:
-      DATABASE_URL: postgresql://postgres:password@ai_db:5432/ai_app
-    command: ["./wait-for-db.sh", "ai_db", "npm", "start"]
+      - .env.docker.prod
+    command: ["./wait-for-db.sh", "prod_db", "npm", "start"]
 
 volumes:
   postgres_data:

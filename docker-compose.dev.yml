@@ -3,13 +3,13 @@
 services:
   dev_db:
     image: postgres:15
-    container_name: ai_db_dev
+    container_name: dev_db
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: ai_app_dev
+      POSTGRES_DB: learning_app_dev
     ports:
-      - "5434:5432" # Local dev DB on 5434
+      - "5434:5432"   # host:container
     volumes:
       - dev_postgres_data:/var/lib/postgresql/data
 
@@ -17,23 +17,15 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.dev
-    container_name: ai_app_dev
+    container_name: dev_app
+    env_file:
+      - .env.docker.dev
     depends_on:
       - dev_db
     ports:
-      - "3001:3000" # dev app accessible on 3001
+      - "3001:3000"
     volumes:
-      - .:/app
+      - .:/app           # hot reload
       - /app/node_modules
-    environment:
-      OPENAI_API_KEY: ${OPENAI_API_KEY}
-      DATABASE_URL: postgresql://postgres:postgres@dev_db:5432/ai_app_dev
-      CHOKIDAR_USEPOLLING: "true"
-      WATCHPACK_POLLING: "true"
-      NEXT_WEBPACK_USEPOLLING: "1"
-      WDS_SOCKET_PORT: "0"
-
-    command: ["npm", "run", "dev"]
-
 volumes:
   dev_postgres_data:

@@ -1,3 +1,5 @@
+# Dockerfile
+
 FROM node:20 AS deps
 WORKDIR /app
 
@@ -16,7 +18,7 @@ COPY .env .env
 COPY --from=deps /app/node_modules ./node_modules
 
 RUN npm install -g npm@11
-
+RUN npx prisma generate
 RUN npm run build
 
 FROM node:20 AS runner
@@ -38,4 +40,4 @@ RUN chmod +x wait-for-db.sh
 
 EXPOSE 3000
 
-CMD ["npm", "start"]
+CMD ["./wait-for-db.sh", "learning_prod_db", "npm", "start"]
