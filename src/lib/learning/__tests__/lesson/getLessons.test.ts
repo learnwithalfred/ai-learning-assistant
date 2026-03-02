@@ -3,7 +3,7 @@ import { describe, it, vi, expect, beforeEach, Mock } from "vitest";
 vi.mock("@/lib/prisma", () => ({
   prisma: {
     lesson: {
-      findMany: vi.fn()
+      findMany: vi.fn(),
     },
   },
 }));
@@ -11,15 +11,12 @@ vi.mock("@/lib/prisma", () => ({
 import { getLessons } from "@/lib/learning/lessons/queries";
 import { prisma } from "@/lib/prisma";
 
-
 describe("getLessons", () => {
-
   beforeEach(() => {
     vi.clearAllMocks();
   });
 
   it("returns all lessons owned by user", async () => {
-
     const fakeLessons = [
       {
         id: "1",
@@ -43,11 +40,9 @@ describe("getLessons", () => {
     });
 
     expect(result).toEqual(fakeLessons);
-  })
+  });
 
   it("throws if no userId provided", async () => {
-    await expect(getLessons(""))
-      .rejects
-      .toThrow("Lesson not found");
+    await expect(getLessons("")).rejects.toThrow("Lesson not found");
   });
-})
+});

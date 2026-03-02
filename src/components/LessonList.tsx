@@ -20,20 +20,16 @@ export default function LessonList({ lessons }: Props) {
           <header className="flex flex-col gap-1 sm:flex-row sm:items-baseline sm:justify-between">
             <h2 className="text-lg font-semibold">{unit.title}</h2>
             <div className="text-xs text-gray-600 dark:text-gray-100">
-              <span className="ml-2">
-                {unit.createdAt.toLocaleString()}
-              </span>
+              <span className="ml-2">{unit.createdAt.toLocaleString()}</span>
             </div>
           </header>
 
           <section className="mt-4">
-            <h3 className="mt-4 text-sm font-semibold">
-              Explanation</h3>
+            <h3 className="mt-4 text-sm font-semibold">Explanation</h3>
             <p className="mt-2 text-sm leading-6 text-gray-800 dark:text-gray-100">
               {unit.explanation}
             </p>
           </section>
-
 
           <section className="mt-4">
             <h3 className="text-sm font-semibold">Key points</h3>

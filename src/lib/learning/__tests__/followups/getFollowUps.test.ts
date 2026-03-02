@@ -1,6 +1,5 @@
 import { describe, expect, it, Mock, vi } from "vitest";
 
-
 vi.mock("@/lib/prisma", () => ({
   prisma: {
     followUp: {
@@ -11,7 +10,6 @@ vi.mock("@/lib/prisma", () => ({
 
 import { prisma } from "@/lib/prisma";
 import { getFollowUps } from "@/lib/learning/followups/queries";
-
 
 describe("getFollowUps", () => {
   it("returns followups for lesson and user", async () => {

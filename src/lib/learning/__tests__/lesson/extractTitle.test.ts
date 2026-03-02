@@ -18,7 +18,9 @@ describe("extractTitle", () => {
   });
 
   it("takes the last 3 meaningful words", async () => {
-    const result = await extractTitle("please teach me about the history of chess");
+    const result = await extractTitle(
+      "please teach me about the history of chess",
+    );
     expect(result).toBe("History of chess");
   });
 
@@ -43,14 +45,14 @@ describe("extractTitle", () => {
   });
 
   it("removes leading articles like 'the', 'a', 'an'", async () => {
-    expect(await extractTitle("explain the history of computing"))
-      .toBe("History of computing");
+    expect(await extractTitle("explain the history of computing")).toBe(
+      "History of computing",
+    );
 
-    expect(await extractTitle("what is an introduction to ai"))
-      .toBe("Introduction to ai");
-
+    expect(await extractTitle("what is an introduction to ai")).toBe(
+      "Introduction to ai",
+    );
   });
-
 
   // Table-driven (multiple scenarios at once)
   const cases = [
@@ -65,5 +67,4 @@ describe("extractTitle", () => {
       expect(result).toBe(expected);
     });
   });
-
 });

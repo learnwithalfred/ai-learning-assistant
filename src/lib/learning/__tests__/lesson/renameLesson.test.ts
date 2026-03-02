@@ -4,23 +4,22 @@ vi.mock("@/lib/prisma", () => ({
   prisma: {
     lesson: {
       findUnique: vi.fn(),
-      update: vi.fn()
+      update: vi.fn(),
     },
   },
 }));
-vi.mock('@/lib/ai/openai-client', () => {
+vi.mock("@/lib/ai/openai-client", () => {
   return {
     openai: {
       // mock only what your code uses
       responses: {
-        create: vi.fn()
-      }
-    }
-  }
-})
+        create: vi.fn(),
+      },
+    },
+  };
+});
 import { renameLesson } from "@/lib/learning/lessons/mutations";
 import { prisma } from "@/lib/prisma";
-
 
 describe("renameLesson", () => {
   it("updates title if owned by user", async () => {
@@ -43,9 +42,8 @@ describe("renameLesson", () => {
       userId: "other",
     });
 
-    await expect(
-      renameLesson("1", "user-1", "New Title")
-    ).rejects.toThrow("Lesson not found");
+    await expect(renameLesson("1", "user-1", "New Title")).rejects.toThrow(
+      "Lesson not found",
+    );
   });
-
-})
+});

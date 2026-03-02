@@ -34,10 +34,7 @@ describe("createLesson", () => {
       title: "Generated Title",
     });
 
-    const result = await createLesson(
-      { prompt: "  Learn React  " },
-      "user-1"
-    );
+    const result = await createLesson({ prompt: "  Learn React  " }, "user-1");
 
     expect(generateAILesson).toHaveBeenCalledWith({
       prompt: "Learn React",

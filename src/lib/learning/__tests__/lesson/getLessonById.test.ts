@@ -29,9 +29,9 @@ describe("getLessonById", () => {
   it("throws if lesson not found", async () => {
     (prisma.lesson.findUnique as Mock).mockResolvedValue(null);
 
-    await expect(
-      getLessonById("1", "user-1")
-    ).rejects.toThrow("Lesson not found");
+    await expect(getLessonById("1", "user-1")).rejects.toThrow(
+      "Lesson not found",
+    );
   });
 
   it("throws if lesson belongs to another user", async () => {
@@ -40,8 +40,8 @@ describe("getLessonById", () => {
       userId: "other-user",
     });
 
-    await expect(
-      getLessonById("1", "user-1")
-    ).rejects.toThrow("Lesson not found");
+    await expect(getLessonById("1", "user-1")).rejects.toThrow(
+      "Lesson not found",
+    );
   });
 });

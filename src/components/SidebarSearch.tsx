@@ -13,11 +13,11 @@ export default function SidebarSearch({ lessons }: { lessons: Lesson[] }) {
   const fuse = useMemo(() => {
     return new Fuse(lessons, {
       // Fields to search
-      keys: ["title", 'keyPoints'],
+      keys: ["title", "keyPoints"],
       threshold: 0.6,
       includeScore: true,
       findAllMatches: true,
-      includeMatches: true
+      includeMatches: true,
     });
   }, [lessons]);
 
@@ -25,7 +25,7 @@ export default function SidebarSearch({ lessons }: { lessons: Lesson[] }) {
 
   if (query.trim() !== "") {
     const results = fuse.search(query);
-    filtered = results.map(r => r.item);
+    filtered = results.map((r) => r.item);
   }
 
   return (
@@ -34,14 +34,20 @@ export default function SidebarSearch({ lessons }: { lessons: Lesson[] }) {
         type="text"
         placeholder="Search titles…"
         value={query}
-        onChange={e => setQuery(e.target.value)}
+        onChange={(e) => setQuery(e.target.value)}
         className="w-full border rounded px-2 py-1 mb-3"
       />
 
       <ul className="space-y-1">
-        {filtered.map(lesson => (
-          <li key={lesson.id} className="flex items-center justify-between group relative">
-            <Link href={`/learn/${lesson.id}`} className="flex-1 px-2 py-1 truncate">
+        {filtered.map((lesson) => (
+          <li
+            key={lesson.id}
+            className="flex items-center justify-between group relative"
+          >
+            <Link
+              href={`/learn/${lesson.id}`}
+              className="flex-1 px-2 py-1 truncate"
+            >
               {lesson.title}
             </Link>
 

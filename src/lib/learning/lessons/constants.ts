@@ -40,7 +40,7 @@ export const TITLE_STOP_PHRASES = [
   "i don't understand",
   "please explain",
   "thanks",
-  "thank you"
-]
+  "thank you",
+];
 
 export const LEADING_ARTICLES = ["the", "a", "an"];

@@ -1,20 +1,20 @@
 import { beforeEach, describe, expect, it, Mock, vi } from "vitest";
 
-vi.mock('@/lib/ai/openai-client', () => ({
+vi.mock("@/lib/ai/openai-client", () => ({
   openaiClient: {
     responses: {
       create: vi.fn(),
     },
   },
-}))
+}));
 
 vi.mock("@/lib/learning/lessons/queries", () => ({
   getLessonById: vi.fn(),
 }));
 
-vi.mock('@/lib/learning/followups/ai', () => ({
+vi.mock("@/lib/learning/followups/ai", () => ({
   generateFollowUpAnswer: vi.fn(),
-}))
+}));
 
 vi.mock("@/lib/prisma", () => ({
   prisma: {
@@ -28,7 +28,6 @@ import { createFollowUp } from "@/lib/learning/followups/mutations";
 import { getLessonById } from "@/lib/learning/lessons/queries";
 import { generateFollowUpAnswer } from "@/lib/learning/followups/ai";
 import { prisma } from "@/lib/prisma";
-
 
 describe("createFollowUp", () => {
   beforeEach(() => {
@@ -59,28 +58,27 @@ describe("createFollowUp", () => {
 
     expect(generateFollowUpAnswer).toHaveBeenCalledWith(
       expect.objectContaining({ id: "1" }),
-      "What is React?"
+      "What is React?",
     );
   });
 
   it("throws if lessonId missing", async () => {
-    await expect(
-      createFollowUp("", "Q", "user-1")
-    ).rejects.toThrow("lessonId is required");
+    await expect(createFollowUp("", "Q", "user-1")).rejects.toThrow(
+      "lessonId is required",
+    );
   });
 
   it("throws if question empty", async () => {
-    await expect(
-      createFollowUp("1", "", "user-1")
-    ).rejects.toThrow("Question is required");
+    await expect(createFollowUp("1", "", "user-1")).rejects.toThrow(
+      "Question is required",
+    );
   });
 
   it("throws if lesson not found", async () => {
     (getLessonById as Mock).mockResolvedValue(null);
 
-    await expect(
-      createFollowUp("1", "Q", "user-1")
-    ).rejects.toThrow("Lesson not found");
+    await expect(createFollowUp("1", "Q", "user-1")).rejects.toThrow(
+      "Lesson not found",
+    );
   });
 });
-

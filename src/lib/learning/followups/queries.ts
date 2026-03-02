@@ -3,7 +3,7 @@ import { prisma } from "@/lib/prisma";
 export async function getFollowUps(
   lessonId: string,
   currentUserId: string,
-   limit?: number
+  limit?: number,
 ) {
   return prisma.followUp.findMany({
     where: {

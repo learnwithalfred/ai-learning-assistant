@@ -11,9 +11,8 @@ const currentUserId = await getCurrentUserId();
 
 export async function createFollowUpAction(
   lessonId: string,
-  formData: FormData
+  formData: FormData,
 ) {
-
   try {
     const question = formData.get("question")?.toString().trim() ?? "";
     if (!question) throw new ValidationError("Question cannot be empty");
@@ -22,15 +21,14 @@ export async function createFollowUpAction(
     revalidatePath(`/learn/${lessonId}`);
   } catch (error) {
     if (error instanceof ValidationError) {
-      return { error: error.message }
+      return { error: error.message };
     }
     if (error instanceof ExternalServiceError) {
-      return { error: "There was a problem generating a response. Try again." }
+      return { error: "There was a problem generating a response. Try again." };
     }
     throw error;
   }
 }
-
 
 export async function deleteLessonAction(id: string) {
   try {
@@ -39,10 +37,10 @@ export async function deleteLessonAction(id: string) {
     redirect("/learn");
   } catch (error) {
     if (error instanceof ValidationError) {
-      return { error: error.message }
+      return { error: error.message };
     }
     if (error instanceof ExternalServiceError) {
-      return { error: "There was a problem generating a response. Try again." }
+      return { error: "There was a problem generating a response. Try again." };
     }
     throw error;
   }
@@ -54,10 +52,10 @@ export async function renameLessonAction(id: string, newTitle: string) {
     revalidatePath("/learn");
   } catch (error) {
     if (error instanceof ValidationError) {
-      return { error: error.message }
+      return { error: error.message };
     }
     if (error instanceof ExternalServiceError) {
-      return { error: "There was a problem generating a response. Try again." }
+      return { error: "There was a problem generating a response. Try again." };
     }
     throw error;
   }

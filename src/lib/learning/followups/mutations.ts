@@ -6,7 +6,7 @@ import { NotFoundError, ValidationError } from "@/lib/errors";
 export async function createFollowUp(
   lessonId: string,
   question: string,
-  currentUserId: string
+  currentUserId: string,
 ): Promise<void> {
   if (!lessonId) throw new ValidationError("lessonId is required");
 

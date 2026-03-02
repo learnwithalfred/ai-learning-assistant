@@ -4,7 +4,7 @@ import { LessonRequest, GeneratedLesson } from "./types";
 import { ExternalServiceError } from "@/lib/errors";
 
 export async function generateAILesson(
-  input: LessonRequest
+  input: LessonRequest,
 ): Promise<GeneratedLesson> {
   const prompt = `
 You are an expert teacher.

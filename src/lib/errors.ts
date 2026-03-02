@@ -22,13 +22,13 @@ export class UnauthorizedError extends Error {
 export class ExternalServiceError extends Error {
   constructor(message = "ExternalServiceError") {
     super(message);
-    this.name = "ExternalServiceError"
+    this.name = "ExternalServiceError";
   }
 }
 
 export class InternalServiceError extends Error {
   constructor(message = "InternalServiceError") {
     super(message);
-    this.name = "InternalServiceError"
+    this.name = "InternalServiceError";
   }
 }
