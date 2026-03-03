@@ -2,8 +2,8 @@
 
 import { getCurrentUserId } from "@/lib/auth/getCurrentUser";
 import { ExternalServiceError, ValidationError } from "@/lib/errors";
-import { createFollowUp } from "@/lib/learning/followups/mutations";
-import { deleteLesson, renameLesson } from "@/lib/learning/lessons/mutations";
+import { createFollowUp } from "@/modules/followups/followup.service";
+import { deleteLesson, renameLesson } from "@/modules/lessons/lesson.service";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 

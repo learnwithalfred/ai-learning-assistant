@@ -1,5 +1,4 @@
 import { describe, it, expect, beforeEach, vi } from "vitest";
-import type { Lesson } from "@/lib/learning/lessons/types";
 
 vi.mock("@/lib/ai/openai-client", () => ({
   openaiClient: {
@@ -11,6 +10,7 @@ vi.mock("@/lib/ai/openai-client", () => ({
 
 import { generateFollowUpAnswer } from "@/lib/learning/followups/ai";
 import { openaiClient } from "@/lib/ai/openai-client";
+import { Lesson } from "@/lib/learning/lessons/types";
 
 describe("generateFollowUpAnswer", () => {
   const mockLesson: Lesson = {

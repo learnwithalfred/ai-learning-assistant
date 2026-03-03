@@ -1,11 +1,10 @@
 "use server";
 import { redirect } from "next/navigation";
-
-import { createLesson } from "@/lib/learning/lessons/mutations";
-import { LessonRequest } from "@/lib/learning/lessons/types";
 import { revalidatePath } from "next/cache";
 import { getCurrentUserId } from "@/lib/auth/getCurrentUser";
 import { ExternalServiceError, ValidationError } from "@/lib/errors";
+import { LessonRequest } from "@/lib/learning/lessons/types";
+import { createLesson } from "@/modules/lessons/lesson.service";
 
 export async function createLessonAction(
   formData: FormData,

@@ -3,7 +3,7 @@
 import { useState, useMemo } from "react";
 import Link from "next/link";
 import Fuse from "fuse.js";
-import { Lesson } from "@/lib/learning/lessons/types";
+import { Lesson } from "@/module/lessons/lessons/types";
 import LessonActionsMenu from "./LessonActionMenu";
 
 export default function SidebarSearch({ lessons }: { lessons: Lesson[] }) {

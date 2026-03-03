@@ -18,7 +18,7 @@ vi.mock("@/lib/ai/openai-client", () => {
     },
   };
 });
-import { renameLesson } from "@/lib/learning/lessons/mutations";
+import { renameLesson } from "@/modules/lessons/lesson.repository";
 import { prisma } from "@/lib/prisma";
 
 describe("renameLesson", () => {

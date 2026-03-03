@@ -1,4 +1,4 @@
-import { getLessons } from "@/lib/learning/lessons/queries";
+import { getLessons } from "@/modules/lessons/lesson.service";
 import SidebarSearch from "./SidebarSearch";
 import { getCurrentUserId } from "@/lib/auth/getCurrentUser";
 

@@ -8,7 +8,7 @@ vi.mock("@/lib/ai/openai-client", () => ({
   },
 }));
 
-vi.mock("@/lib/learning/lessons/queries", () => ({
+vi.mock("@/modules/lessons/lesson.repository", () => ({
   getLessonById: vi.fn(),
 }));
 
@@ -24,8 +24,8 @@ vi.mock("@/lib/prisma", () => ({
   },
 }));
 
-import { createFollowUp } from "@/lib/learning/followups/mutations";
-import { getLessonById } from "@/lib/learning/lessons/queries";
+import { createNewFollowUp } from "@/modules/followups/followup.repository";
+import { getLessonById } from "@/modules/lessons/lesson.repository";
 import { generateFollowUpAnswer } from "@/lib/learning/followups/ai";
 import { prisma } from "@/lib/prisma";
 
@@ -45,7 +45,7 @@ describe("createFollowUp", () => {
 
     (generateFollowUpAnswer as Mock).mockResolvedValue("AI answer");
 
-    await createFollowUp("1", "What is React?", "user-1");
+    await createNewFollowUp("1", "What is React?", "user-1");
 
     expect(prisma.followUp.create).toHaveBeenCalledWith({
       data: {

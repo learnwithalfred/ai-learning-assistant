@@ -15,10 +15,10 @@ vi.mock("@/lib/learning/lessons/ai", () => ({
   generateAILesson: vi.fn(),
 }));
 
-import { createLesson } from "@/lib/learning/lessons/mutations";
 import { prisma } from "@/lib/prisma";
-import { generateAILesson } from "@/lib/learning/lessons/ai";
 import { extractTitle } from "@/lib/learning/utils/extractTitle";
+import { generateAILesson } from "@/lib/learning/lessons/ai";
+import { createLesson } from "@/modules/lessons/lesson.repository";
 
 describe("createLesson", () => {
   it("creates lesson successfully", async () => {

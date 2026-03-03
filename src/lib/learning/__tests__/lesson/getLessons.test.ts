@@ -8,7 +8,7 @@ vi.mock("@/lib/prisma", () => ({
   },
 }));
 
-import { getLessons } from "@/lib/learning/lessons/queries";
+import { getLessons } from "@/modules/lessons/lesson.repository";
 import { prisma } from "@/lib/prisma";
 
 describe("getLessons", () => {

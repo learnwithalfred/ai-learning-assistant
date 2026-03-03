@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, type Mock } from "vitest";
-import { deleteLesson } from "@/lib/learning/lessons/mutations";
 import { prisma } from "@/lib/prisma";
+import { deleteLesson } from "@/modules/lessons/lesson.repository";
 
 vi.mock("@/lib/learning/lessons/ai", () => ({
   generateAILesson: vi.fn().mockResolvedValue({
