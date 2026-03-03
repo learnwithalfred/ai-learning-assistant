@@ -1,4 +1,4 @@
-import { Lesson } from "@/module/lessons/lessons/types";
+import { Lesson } from "@/lib/learning/lessons/types";
 
 type Props = {
   lessons: Lesson[];
