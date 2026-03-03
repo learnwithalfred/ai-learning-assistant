@@ -9,7 +9,7 @@ vi.mock("@/lib/prisma", () => ({
 }));
 
 import { prisma } from "@/lib/prisma";
-import { getFollowUps } from "@/modules/followups/followup.repository";
+import { getFollowUps } from "@/modules/followups/followup.service";
 
 describe("getFollowUps", () => {
   it("returns followups for lesson and user", async () => {

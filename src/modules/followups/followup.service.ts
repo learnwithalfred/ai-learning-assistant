@@ -40,5 +40,7 @@ export async function getFollowUps(
   currentUserId: string,
   limit?: number,
 ) {
+  if (!currentUserId) throw new UnauthorizedError("Unauthenticated");
+  if (!lessonId) throw new ValidationError("Lesson ID is required");
   return followupRepository.findFollowUpsByLesson(lessonId, currentUserId);
 }

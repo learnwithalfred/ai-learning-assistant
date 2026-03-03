@@ -51,7 +51,7 @@ describe("generateFollowUpAnswer", () => {
     } as Awaited<ReturnType<typeof openaiClient.responses.create>>);
 
     await expect(generateFollowUpAnswer(mockLesson, "Test")).rejects.toThrow(
-      "Empty response from model",
+      "AI request failed",
     );
   });
 });

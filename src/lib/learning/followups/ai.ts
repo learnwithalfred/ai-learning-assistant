@@ -1,12 +1,13 @@
 import { Lesson } from "@/lib/learning/lessons/types";
 import { generateText } from "@/lib/ai/ai-gateway";
+import { ValidationError } from "@/lib/errors";
 
 export async function generateFollowUpAnswer(
   lesson: Lesson,
   question: string,
 ): Promise<string> {
   const q = question.trim();
-
+  if (!q) throw new ValidationError("Question is required");
   const prompt = `
 You are a helpful tutor.
 

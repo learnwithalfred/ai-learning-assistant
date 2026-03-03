@@ -45,7 +45,7 @@ describe("generateAILesson", () => {
     });
 
     await expect(generateAILesson({ prompt: "React" })).rejects.toThrow(
-      "Model returned empty response",
+      "AI request failed",
     );
   });
 
@@ -55,7 +55,7 @@ describe("generateAILesson", () => {
     });
 
     await expect(generateAILesson({ prompt: "React" })).rejects.toThrow(
-      "Model did not return valid JSON.",
+      "Model did not return valid JSON",
     );
   });
 
