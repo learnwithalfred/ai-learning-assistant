@@ -1,11 +1,10 @@
 export const dynamic = "force-dynamic";
 
-import { getLessonById } from "@/lib/learning/lessons/queries";
-import { getFollowUps } from "@/lib/learning/followups/queries";
 import { createFollowUpAction } from "./actions";
 import ChatInput from "@/components/ChatInput";
 import { getCurrentUserId } from "@/lib/auth/getCurrentUser";
-
+import { getFollowUps } from "@/modules/followups/followup.service";
+import { getLessonById } from "@/modules/lessons/lesson.service";
 
 export async function generateMetadata({ params }) {
   const currentUserId = await getCurrentUserId();
@@ -16,9 +15,11 @@ export async function generateMetadata({ params }) {
   };
 }
 
-
-export default async function LessonPage({ params }: { params: Promise<{ id: string }> }) {
-
+export default async function LessonPage({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) {
   const currentUserId = await getCurrentUserId();
   const { id } = await params;
   const lesson = await getLessonById(id, currentUserId);
@@ -28,10 +29,8 @@ export default async function LessonPage({ params }: { params: Promise<{ id: str
 
   return (
     <div className="flex flex-col h-full">
-
       {/* Scrollable content */}
       <div className="flex-1 overflow-y-auto px-6 py-6 space-y-6">
-
         {/* Lesson Question */}
         <div className="flex justify-end">
           <div className="max-w-[75%] bg-blue-100 text-blue-900 px-4 py-3 rounded-2xl rounded-br-sm shadow-sm">
@@ -44,7 +43,6 @@ export default async function LessonPage({ params }: { params: Promise<{ id: str
         {/* Lesson Answer */}
         <div className="flex justify-start">
           <div className="max-w-[75%] bg-gray-100 text-gray-900 px-4 py-3 rounded-2xl rounded-bl-sm shadow-sm space-y-4">
-
             <p className="text-sm whitespace-pre-line leading-relaxed">
               {lesson.explanation}
             </p>
@@ -63,14 +61,12 @@ export default async function LessonPage({ params }: { params: Promise<{ id: str
             <p className="text-xs text-gray-400 pt-2">
               {lesson.createdAt.toLocaleString()}
             </p>
-
           </div>
         </div>
         {/* Follow-up messages */}
         <section className="mt-8 space-y-6">
           {followups.map((item) => (
             <div key={item.id} className="space-y-3">
-
               {/* User Question */}
               <div className="flex justify-end">
                 <div className="max-w-[75%] bg-blue-100 text-blue-900 px-4 py-3 rounded-2xl rounded-br-sm shadow-sm">
@@ -88,16 +84,15 @@ export default async function LessonPage({ params }: { params: Promise<{ id: str
                   </p>
                 </div>
               </div>
-
             </div>
           ))}
         </section>
       </div>
       <ChatInput
-        action={createFollowUpAction.bind(null, id)} name="question"
+        action={createFollowUpAction.bind(null, id)}
+        name="question"
         placeholder="Ask a follow-up question…"
       />
-
     </div>
   );
 }

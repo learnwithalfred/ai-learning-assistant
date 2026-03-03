@@ -1,5 +1,4 @@
-import { openaiClient } from "@/lib/ai/openai-client";
-import { AI_CONFIG } from "@/lib/ai/configs";
+import { generateText } from "@/lib/ai/ai-gateway";
 import { LessonRequest, GeneratedLesson } from "./types";
 import { ExternalServiceError } from "@/lib/errors";
 
@@ -31,23 +30,14 @@ Rules:
 - keyPoints must be a short list of bullet-style strings.
 `.trim();
 
-  const response = await openaiClient.responses.create({
-    model: AI_CONFIG.model,
-    input: prompt,
-    reasoning: AI_CONFIG.reasoning,
-    max_output_tokens: AI_CONFIG.maxOutputTokens,
-  });
-
-  const text = response.output_text?.trim();
-  if (!text) {
-    throw new ExternalServiceError("Model returned empty response");
-  }
+  const text = await generateText(prompt);
 
   let result: unknown;
+
   try {
     result = JSON.parse(text);
   } catch {
-    throw new ExternalServiceError("Model did not return valid JSON.");
+    throw new ExternalServiceError("Model did not return valid JSON");
   }
 
   function isGeneratedLesson(value: unknown): value is GeneratedLesson {

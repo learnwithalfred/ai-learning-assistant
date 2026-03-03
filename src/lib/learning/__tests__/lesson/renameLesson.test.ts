@@ -18,8 +18,8 @@ vi.mock("@/lib/ai/openai-client", () => {
     },
   };
 });
-import { renameLesson } from "@/lib/learning/lessons/mutations";
 import { prisma } from "@/lib/prisma";
+import { renameLesson } from "@/modules/lessons/lesson.service";
 
 describe("renameLesson", () => {
   it("updates title if owned by user", async () => {

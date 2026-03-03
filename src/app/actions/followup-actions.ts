@@ -1,9 +1,9 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { createFollowUp } from "@/lib/learning/followups/mutations";
 import { getCurrentUserId } from "@/lib/auth/getCurrentUser";
 import { ExternalServiceError, ValidationError } from "@/lib/errors";
+import { createFollowUp } from "@/modules/followups/followup.service";
 
 export async function createFollowUpAction(
   formData: FormData,

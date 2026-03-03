@@ -1,34 +1,31 @@
-export class NotFoundError extends Error {
+import { AppError } from "@/server/errors";
+
+export class NotFoundError extends AppError {
   constructor(message = "Not found") {
-    super(message);
-    this.name = "NotFoundError";
+    super(message, 404);
   }
 }
 
-export class ValidationError extends Error {
+export class ValidationError extends AppError {
   constructor(message = "Invalid input") {
-    super(message);
-    this.name = "ValidationError";
+    super(message, 400);
   }
 }
 
-export class UnauthorizedError extends Error {
+export class UnauthorizedError extends AppError {
   constructor(message = "Unauthorized") {
-    super(message);
-    this.name = "UnauthorizedError";
+    super(message, 401);
   }
 }
 
-export class ExternalServiceError extends Error {
+export class ExternalServiceError extends AppError {
   constructor(message = "ExternalServiceError") {
-    super(message);
-    this.name = "ExternalServiceError";
+    (super(message), 502);
   }
 }
 
-export class InternalServiceError extends Error {
+export class InternalServiceError extends AppError {
   constructor(message = "InternalServiceError") {
-    super(message);
-    this.name = "InternalServiceError";
+    super(message, 500);
   }
 }

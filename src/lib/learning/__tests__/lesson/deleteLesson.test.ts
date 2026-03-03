@@ -1,44 +1,27 @@
 import { describe, it, expect, vi, type Mock } from "vitest";
-import { deleteLesson } from "@/lib/learning/lessons/mutations";
-import { prisma } from "@/lib/prisma";
 
-vi.mock("@/lib/learning/lessons/ai", () => ({
-  generateAILesson: vi.fn().mockResolvedValue({
-    explanation: "mock explanation",
-    keyPoints: ["mock"],
-  }),
+vi.mock("@/modules/lessons/lesson.repository", () => ({
+  findLessonById: vi.fn(),
+  deleteLessonById: vi.fn(),
 }));
 
-vi.mock("@/lib/prisma", () => ({
-  prisma: {
-    lesson: {
-      findUnique: vi.fn(),
-      delete: vi.fn(),
-      create: vi.fn(),
-      findMany: vi.fn(),
-      update: vi.fn(),
-    },
-  },
-}));
-
-const mockFindUnique = prisma.lesson.findUnique as unknown as Mock;
+import * as repository from "@/modules/lessons/lesson.repository";
+import { deleteLesson } from "@/modules/lessons/lesson.service";
 
 describe("deleteLesson", () => {
   it("deletes lesson if owned by user", async () => {
-    mockFindUnique.mockResolvedValue({
+    (repository.findLessonById as Mock).mockResolvedValue({
       id: "1",
       userId: "user-123",
     });
 
     await deleteLesson("1", "user-123");
 
-    expect(prisma.lesson.delete).toHaveBeenCalledWith({
-      where: { id: "1" },
-    });
+    expect(repository.deleteLessonById).toHaveBeenCalledWith("1");
   });
 
   it("throws when lesson not found", async () => {
-    mockFindUnique.mockResolvedValue(null);
+    (repository.findLessonById as Mock).mockResolvedValue(null);
 
     await expect(deleteLesson("missing", "user-123")).rejects.toThrow(
       "Lesson not found",
@@ -46,7 +29,7 @@ describe("deleteLesson", () => {
   });
 
   it("throws when lesson belongs to another user", async () => {
-    mockFindUnique.mockResolvedValue({
+    (repository.findLessonById as Mock).mockResolvedValue({
       id: "1",
       userId: "other-user",
     });

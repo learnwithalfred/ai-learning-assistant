@@ -8,8 +8,8 @@ vi.mock("@/lib/prisma", () => ({
   },
 }));
 
-import { getLessons } from "@/lib/learning/lessons/queries";
 import { prisma } from "@/lib/prisma";
+import { getLessons } from "@/modules/lessons/lesson.service";
 
 describe("getLessons", () => {
   beforeEach(() => {
@@ -43,6 +43,6 @@ describe("getLessons", () => {
   });
 
   it("throws if no userId provided", async () => {
-    await expect(getLessons("")).rejects.toThrow("Lesson not found");
+    await expect(getLessons("")).rejects.toThrow("Unauthenticated");
   });
 });

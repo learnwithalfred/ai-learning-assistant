@@ -1,14 +1,25 @@
 import { prisma } from "@/lib/prisma";
 
-export async function getFollowUps(
+export async function createNewFollowUp(data: {
+  lessonId: string;
+  question: string;
+  answer: string;
+  userId: string;
+}) {
+  await prisma.followUp.create({
+    data,
+  });
+}
+
+export async function findFollowUpsByLesson(
   lessonId: string,
-  currentUserId: string,
+  userId: string,
   limit?: number,
 ) {
   return prisma.followUp.findMany({
     where: {
       lessonId,
-      userId: currentUserId,
+      userId: userId,
     },
     orderBy: {
       createdAt: "asc",
